@@ -1,15 +1,16 @@
 from flask import Flask
-
 from flask_sqlalchemy import SQLAlchemy
+
 import authentication
-from __init__ import application, db
+import credentials
 
-#application = Flask(__name__)
-#application.config['SQLALCHEMY_DATABASE_URI'] = db_url
-#db = SQLAlchemy(application)
+db_url = 'mysql+pymysql://{0}:{1}@goldeedb.crkebn7vcqw4.us-west-1.rds.amazonaws.com:3306/goldee'.format(credentials.username, credentials.password)
 
 
-from models import User
+application = Flask(__name__)
+application.config['SQLALCHEMY_DATABASE_URI'] = db_url
+db = SQLAlchemy(application)
+
 
 def main(): 
 	k = User()
@@ -34,4 +35,4 @@ if __name__ == "__main__":
 # Need to close the session after each request or application context shutdown
 @application.teardown_appcontext
 def shutdown_session(exception=None):
-	db_session.remove()
+	db.session.remove()
