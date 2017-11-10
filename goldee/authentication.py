@@ -1,8 +1,9 @@
-import os
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager
+from models import db
 
 def check_password(userEmail, password):
-    hashValue = db_session.query(User.HashValue).filter(User.Email == userEmail).one()
+    hashValue = db.session.query(User.HashValue).filter(User.Email == userEmail).one()
     return check_password_hash(hashValue, password)
 
 
@@ -11,3 +12,6 @@ def check_password(userEmail, password):
 
 def generate_hash(password):
     return generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+
+
+login_manager = LoginManager()

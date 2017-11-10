@@ -1,5 +1,8 @@
 # This is where you define the models of your application. This may be split into several modules in the same way as views.py.
-from __init__ import db
+from flask_sqlalchemy import SQLAlchemy
+
+
+db = SQLAlchemy()
 
 class User(db.Model):
 	__tablename__ = "User"

@@ -1,30 +1,35 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from authentication import login_manager
 
-import authentication
 import credentials
+from database import testDBEverything
+from models import db
 
 db_url = 'mysql+pymysql://{0}:{1}@goldeedb.crkebn7vcqw4.us-west-1.rds.amazonaws.com:3306/goldee'.format(credentials.username, credentials.password)
-
+UPLOAD_FOLDER = 'images'
 
 application = Flask(__name__)
 application.config['SQLALCHEMY_DATABASE_URI'] = db_url
-db = SQLAlchemy(application)
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+with application.app_context():
+	db.init_app(application)
+	db.app = application
+login_manager.init_app(application)
+
+from views.auth import AuthenticationBP
+from views.user import UserBP
+from views.index import IndexBP
+
+application.register_blueprint(IndexBP, template_folder = 'templates')
+application.register_blueprint(AuthenticationBP, template_folder = 'templates')
+application.register_blueprint(UserBP, template_folder = 'templates')
+application.app_context().push()
 
 
-def main(): 
-	k = User()
-	k.FirstName = 'Bobs'
-	k.LastName = 'Smiths'
-	k.Email = 'Bobsmithsss@aol.com'
-	k.HashValue = authentication.generate_hash("eiffel")
-	k.Zip = 92545
-	k.Address1 = 'Yess'
-	k.City = 'Yess'
-	k.State = 'YA'
-	k.Picture = 'Yes.yasssssssssssssss'
-	#db.session.add(k)
-	#db.session.commit()
+def main():
+	#testDBEverything()
 
 
 if __name__ == "__main__":
