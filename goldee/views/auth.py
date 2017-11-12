@@ -1,13 +1,16 @@
 from flask import Blueprint, render_template, request
 from werkzeug import secure_filename
-from authentication import generate_hash, login_manager
-from database import insertUser
-from models import User
 
 
 # where we put the signin view make sure to add werkzeug.secure_filename() -- see here http://werkzeug.pocoo.org/docs/0.12/utils/
 
 AuthenticationBP = Blueprint('auth', __name__, url_prefix = '/auth')
+
+
+from goldee.authentication import generate_hash, login_manager
+from goldee.database import insertUser
+from goldee.models import User
+from goldee.forms import LoginForm, SignUpForm
 
 class AuthUser():
     def __init__(self, id):
@@ -29,7 +32,7 @@ class AuthUser():
     def login(self):
         self.authenticated = True
 
-from forms import LoginForm, SignUpForm
+
 
 @AuthenticationBP.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -66,3 +69,4 @@ def signUp():
         database.insertUser(user)
         return flask.redirect(flask.url_for('user.selectCategories'))
     return render_template('signUp.html', form = form)
+    

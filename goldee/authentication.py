@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
-from models import db
+from goldee.models import db
 
 def check_password(userEmail, password):
     hashValue = db.session.query(User.HashValue).filter(User.Email == userEmail).one()

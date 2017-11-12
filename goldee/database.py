@@ -1,4 +1,4 @@
-from models import db, User, Category
+from goldee.models import db, User, Category
 
 # insert, Get, Update
 
@@ -7,8 +7,6 @@ def insertUser(user):
         db.session.add(user)
         db.session.commit()
     except:
-        db.session.rollback()
-        db.session.remove()
         raise
 
 '''
@@ -27,20 +25,19 @@ def testDBEverything():
         db.session.add(user)
         db.session.commit()
     except:
-        db.session.rollback()
-        db.session.remove()
         raise
 
     try:
         userQuery = db.session.query(User.FirstName, User.Zip).all()
         print(userQuery)
     except:
-        db.session.rollback()
-        db.session.remove()
         raise
 
-    db.session.query(User).delete()
-    db.session.commit()
+    try:
+        db.session.query(User).delete()
+        db.session.commit()
+    except:
+        raise
 '''
 
 def getSubcategories(categoryID):
@@ -51,8 +48,6 @@ def getSubcategories(categoryID):
         subcategories = [(subcategory.SubcategoryID, subcategory.Name) for subcategory in subcategoriesQuery]
         return subcategories
     except:
-        db.session.rollback()
-        db.session.remove()
         raise
 
 
@@ -63,8 +58,6 @@ def getCategories():
         categories = [(category.CategoryID, category.Name) for category in categoriesQuery]
         return categories
     except:
-        db.session.rollback()
-        db.session.remove()
         raise
 
 #def insertSubcategories():

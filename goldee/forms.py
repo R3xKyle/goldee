@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import BooleanField, IntegerField, PasswordField, RadioField, SelectField, StringField, validators
-from database import getCategories
+from goldee.database import getCategories
 
 class LoginForm(FlaskForm):
     email = StringField('Email', [validators.DataRequired()])
@@ -62,3 +62,4 @@ class ChangePasswordForm(FlaskForm):
     oldPassword = PasswordField('Old Password', [validators.DataRequired()])
     password = PasswordField('New Password', [validators.DataRequired(), validators.EqualTo('confirmPassword', message = 'Passwords must match'), validators.Length(min = 8)])
     confirmPassword = PasswordField('Repeat New Password')
+    
