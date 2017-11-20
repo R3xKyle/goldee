@@ -3,61 +3,69 @@
     <toolbar></toolbar>
     <div class="fullpage-container">
 	  <div class="fullpage-wp" v-fullpage="opts" ref="register">
-	    <div class="page-1 page">
+	    <div style="background-color: #F7AEA3; width: 100%; height: 10%" class="page-1 page">
         <div class="page-content">
+          <div style="overflow: scroll; background-color: white; margin:2%; width: 100%; height: 150%; border-radius: 25px;">
   	      <p class="part-1">Create an Account</p>
   	      <div class="list-line">
-            <div class="name-list-item">
+            <div style="margin: 20px; " class="name-list-item">
               <p class="prompt-label">First Name</p>
-              <p class="input-para"><input class="text-input" v-model="firstname"></input></p>
+              <p class="input-para"><input style="width: 90%;" class="text-input" v-model="firstname"></input></p>
             </div>
             <div class="name-list-item">
-              <p class="prompt-label">Last Name</p>
-              <p class="input-para"><input class="text-input" v-model="lastname"></p>
+              <p class="prompt-label">Last Name <img src="../assets/Padlock.png"></p>
+              <p class="input-para"><input style="width: 90%;" class="text-input" v-model="lastname"></p>
             </div>
           </div>
   	      <p>
-            <div class="list-item">
-              <p class="prompt-label">Email</p>
+            <div style="margin-bottom: 50px; " class="list-item">
+              <p class="prompt-label">Email <img src="../assets/Padlock.png"></p>
               <p class="input-para"><input v-model="email" class="text-input"></input></p></p>
             </div>
           </p>
           <p>
             <div class="list-item">
-              <p class="prompt-label">Password</p>
+              <p class="prompt-label">Password<img src="../assets/Padlock.png"></p>
               <p class="input-para"><input v-model="password" class="text-input" type="password"></input></p></p>
             </div>
           </p>
   	      <button class="blue-button" @click="moveNext">SIGN UP</button>
-        </div>
-	    </div>
-      <div class="page-2 page">
-        <p class="part-2">Upload your Picture</p>
 
-    <picture-input
-      ref="pictureInput"
-      @change="onChange"
-      width="350"
-      height="350"
-      margin="16"
-      accept="image/jpeg,image/png"
-      size="10"
-      buttonClass="btn"
-      :customStrings="{
-        upload: '<h1>Bummer!</h1>',
-        drag: 'Drag a Picture Here'
-      }">
-    </picture-input>
-  <p></p>
+        </div>
+        <div>
+          <p>haha</p>
+        </div>
+        </div>
+
+	    </div>
+      <div style="background-color: #F7AEA3;" class="page-2 page">
+        <div style="overflow: scroll; background-color: white; margin:2%; width: 60%; height: 150%; border-radius: 25px;">
+        <p class="part-2">Upload your Picture</p>
+        <picture-input
+        ref="pictureInput"
+        @change="onChange"
+        width="350"
+        height="350"
+        margin="16"
+        accept="image/jpeg,image/png"
+        size="10"
+        buttonClass="btn"
+        :customStrings="{
+          upload: '<h1>Bummer!</h1>',
+          drag: 'Drag a Picture Here'
+        }">
+        </picture-input>
+        <p></p>
         <button class="blue-button" @click="moveNext">NEXT</button>
+        </div>
       </div>
 
-	    <div class="page-3 page">
+	    <div style="background-color: #F7AEA3;" class="page-3 page">
 	      <p class="part-3">Find a Community Near You</p>
 	      <button class="gray-button">USE MY LOCATION</button>
 	      <button class="blue-button" @click="moveNext">NEXT</button>
 	    </div>
-      <div class="page-4 page">
+      <div style="background-color: #F7AEA3;" class="page-4 page">
         <p class="part-4">Join a Public Community</p>
         <button class="blue-button" @click="moveNext">NEXT</button>
       </div>
@@ -254,13 +262,14 @@
       </div>
 	  </div>
 	</div>
+
   </div>
 </template>
 
 <script>
 
 import Toolbar from './Toolbar'
-
+import Footbar from './Footbar'
 import Vue from 'vue'
 import jQuery from 'jQuery'
 
@@ -274,9 +283,6 @@ import PictureInput from 'vue-picture-input'
 Vue.use(VueFullpage)
 
 export default {
-  components: {
-    Toolbar
-  },
   data() {
     return {
       email: '',
@@ -319,7 +325,9 @@ export default {
   },
 
   components: {
-    PictureInput
+    PictureInput,
+    Toolbar,
+    Footbar
   },
   methods: {
 
@@ -439,7 +447,7 @@ export default {
  	left: 0;
  	bottom: 0;
  	width: 100%;
- 	height: 95%;
+ 	height: 87%;
 
 }
 
@@ -461,6 +469,7 @@ export default {
 
 .page-content {
   width: 600px;
+
   margin: auto;
 }
 
@@ -480,7 +489,7 @@ export default {
 
 .text-input {
   width: 100%;
-  height: 35px;
+  height: 50px;
   font-size: 20px;
 }
 
@@ -545,10 +554,10 @@ export default {
 }
 
 .blue-button {
-  background: SkyBlue;
+  background: #8EDBDF;
   border-style: solid;
-  border-color: white;
-  color: white;
+  border-color: #8EDBDF;
+  color: #1E3C46;
   padding: 10px 25px;
   text-align: center;
   text-decoration: none;
@@ -558,10 +567,10 @@ export default {
 }
 
 .gray-button {
-  background: Gray;
+  background: #F0EBE7;
   border-style: solid;
-  border-color: white;
-  color: white;
+  border-color: #F0EBE7;
+  color: #9D9A97;
   padding: 10px 25px;
   text-align: center;
   text-decoration: none;
