@@ -63,3 +63,7 @@ class ChangePasswordForm(FlaskForm):
     password = PasswordField('New Password', [validators.DataRequired(), validators.EqualTo('confirmPassword', message = 'Passwords must match'), validators.Length(min = 8)])
     confirmPassword = PasswordField('Repeat New Password')
     
+
+class SplashPageForm(FlaskForm):
+    name = StringField('First Name', [validators.DataRequired(), validators.Length(max = 50)])
+    email = StringField('Email', [validators.DataRequired(), validators.Email(), validators.Length(max = 50)])

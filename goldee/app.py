@@ -21,13 +21,13 @@ login_manager.init_app(application)
 
 
 #from goldee.database import testDBEverything
-from goldee.views.auth import AuthenticationBP
-from goldee.views.user import UserBP
+#from goldee.views.auth import AuthenticationBP
+#from goldee.views.user import UserBP
 from goldee.views.index import IndexBP
 
-application.register_blueprint(IndexBP, template_folder = 'templates')
-application.register_blueprint(AuthenticationBP, template_folder = 'templates')
-application.register_blueprint(UserBP, template_folder = 'templates')
+application.register_blueprint(IndexBP)
+#application.register_blueprint(AuthenticationBP, template_folder = 'templates')
+#application.register_blueprint(UserBP, template_folder = 'templates')
 
 
 

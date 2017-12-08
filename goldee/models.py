@@ -4,6 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
+class SimpleUser(db.Model):
+	__tablename__ == "SimpleUser"
+	UserID = db.Column(db.Integer, primary_key = True)
+	Name = db.Column(db.String(50))
+	Email = db.Column(db.String(50))
+	SignUpDate = db.Column(db.DateTime, default = db.func.now())
+
 class User(db.Model):
 	__tablename__ = "User"
 	UserID = db.Column(db.Integer, primary_key = True)
