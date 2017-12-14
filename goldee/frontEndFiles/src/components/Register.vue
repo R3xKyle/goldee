@@ -469,7 +469,6 @@ export default {
 
 .page-content {
   width: 600px;
-
   margin: auto;
 }
 
