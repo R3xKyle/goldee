@@ -27,7 +27,10 @@ class PostForm(FlaskForm):
     title = StringField('Title', [validators.DataRequired(), validators.Length(max = 100)])
     description = StringField('Description', [validators.optional(), validators.Length(max = 500)])
     category = SelectField('Category', choices = getCategories())
-    addressType = RadioField('Use Profile Address', 'Use Current Location', 'Use Custom Address')
+    authorName = StringField('Name', [validators.DataRequired(), validators.Length(max = 50)])
+    email = StringField('Email', [validators.DataRequired(), validators.Email(), validators.Length(max = 100)])
+    postType = RadioField('Request', 'Offer')
+    #addressType = RadioField('Use Profile Address', 'Use Current Location', 'Use Custom Address')
     # Depending on addressType's value, the bottom fields will/won't be displayed
     # On front end, certain fields will need to be 'grayed-out' depending on if 'Use Custom Address' is selected
     address1 = StringField('Address Line 1', [validators.Optional(), validators.Length(max = 100)])
@@ -35,6 +38,7 @@ class PostForm(FlaskForm):
     city = StringField('City', [validators.Optional(), validators.Length(max = 100)])
     state = StringField('State', [validators.Optional(), validators.Length(2)])
     zipCode = IntegerField('Zip', [validators.Optional(), validators.NumberRange(min = 10000, max = 99999)])
+    picture = FileField('Profile Picture', [FileRequired(), FileAllowed(['jpg', 'png'], 'Images only')])
 
 
 class ReportForm(FlaskForm):

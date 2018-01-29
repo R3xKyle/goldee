@@ -41,9 +41,12 @@ class Category(db.Model):
 class Post(db.Model):
 	__tablename__ = "Post"
 	PostID = db.Column(db.Integer, primary_key = True)
+	PostType = db.Column(db.Enum('Offer', 'Request'))
 	Status = db.Column(db.Enum('Active','Accepted', 'Complete', 'Canceled', 'Inactive'))
-	AuthorID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
-	HelperID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
+	#AuthorID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
+	#HelperID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
+	AuthorName = db.Column(db.String(100))
+	Email = db.Column(db.String(100))
 	Title = db.Column(db.String(100))
 	Description = db.Column(db.String(500))
 	CategoryID = db.Column(db.Integer, db.ForeignKey("Category.CategoryID"))
@@ -52,11 +55,12 @@ class Post(db.Model):
 	City = db.Column(db.String(100))
 	State = db.Column(db.String(2))
 	Zip = db.Column(db.Integer)
-	EstimatedTime = db.Column(db.Enum('15 Minutes', '30 Minutes', '1 Hour', '2 Hours', '4 Hours', '8 Hours'))
+	Picture = db.Column(db.String(100))
+	#EstimatedTime = db.Column(db.Enum('15 Minutes', '30 Minutes', '1 Hour', '2 Hours', '4 Hours', '8 Hours'))
 	PostDate = db.Column(db.DateTime, default = db.func.now())
-	ExpirationDate = db.Column(db.DateTime) # This one is still in question
-	AcceptanceDate = db.Column(db.DateTime)
-	LastUpdated = db.Column(db.DateTime, default = db.func.now())
+	#ExpirationDate = db.Column(db.DateTime) # This one is still in question
+	#AcceptanceDate = db.Column(db.DateTime)
+	#LastUpdated = db.Column(db.DateTime, default = db.func.now())
 
 class Conversation(db.Model):
 	__tablename__ = "Conversation"

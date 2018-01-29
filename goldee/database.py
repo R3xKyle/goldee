@@ -2,9 +2,9 @@ from goldee.models import db, User, Category
 
 # insert, Get, Update
 
-def insertUser(user):
+def insertSimple(insertModel):
     try:
-        db.session.add(user)
+        db.session.add(insertModel)
         db.session.commit()
     except:
         raise
@@ -55,9 +55,34 @@ def getCategories():
     try:
         categoriesQuery = db.session.query(Category.CategoryID, Category.Name).\
          order_by(Category.Name).all()
-        categories = [(category.CategoryID, category.Name) for category in categoriesQuery]
+         categories = []
+         for cat in categoriesQuery:
+            category = Category()
+            category.CategoryID = cat.CategoryID
+            category.Name = cat.Name
+            categories.add(Category)
+        #categories = [(category.CategoryID, category.Name) for category in categoriesQuery]
         return categories
     except:
         raise
 
 #def insertSubcategories():
+
+
+def getPost(postID):
+    try:
+        postQuery = db.session.query(Post.PostID, Post.AuthorName, Post.Title, Post.Description, Post.Picture, Post.CategoryID, Post.Date, Post.Type).\
+         filter(Post.PostID = postID).one()
+    except:
+        raise
+    return postQuery
+        #post = Post()
+        #post.PostID = postQuery.PostID
+        #post.Title = postQuery.Title
+        #post.Description = postQuery.Description
+        #post.CategoryID = postQuery.CategoryID
+        #post.AuthorName = postQuery.AuthorName
+        #post.postDate = postQuery.Date
+        #post.Picture
+
+
