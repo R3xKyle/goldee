@@ -10,8 +10,10 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import FeedWall from './components/FeedWall'
-import Post from './components/Post'
 import Location from './components/Location'
+import NewPost from './components/NewPost/NewPost'
+import NewPostCategory from './components/NewPost/NewPostCategory'
+import NewPostContactInfo from './components/NewPost/NewPostContactInfo'
 
 const routes = [
   { path: '/', component: Home },
@@ -19,8 +21,10 @@ const routes = [
   { path: '/login', component: Login},
   { path: '/profile', component: Profile},
   { path: '/feedwall', component: FeedWall},
-  { path: '/post', component: Post },
   { path: '/location', component: Location }
+  { path: '/newpost/post', component: NewPost },
+  { path: '/newpost/contact', component: NewPostContactInfo },
+  { path: '/newpost', component: NewPostCategory }
 ]
 
 const router = new VueRouter({

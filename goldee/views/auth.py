@@ -4,11 +4,11 @@ from werkzeug import secure_filename
 
 # where we put the signin view make sure to add werkzeug.secure_filename() -- see here http://werkzeug.pocoo.org/docs/0.12/utils/
 
-AuthenticationBP = Blueprint('auth', __name__, url_prefix = '/auth')
+AuthenticationBP = Blueprint('auth', __name__)
 
 
 from goldee.authentication import generate_hash, login_manager
-from goldee.database import insertUser
+from goldee.database import insertSimple
 from goldee.models import User
 from goldee.forms import LoginForm, SignUpForm
 
@@ -66,7 +66,7 @@ def signUp():
         user.State = form.state.data
         user.Zip = form.zip.data
         user.Picture = form.picture.data.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(form.picture.data)))
-        database.insertUser(user)
+        database.insertSimple(user)
         return flask.redirect(flask.url_for('user.selectCategories'))
     return render_template('signUp.html', form = form)
     
