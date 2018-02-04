@@ -1,14 +1,27 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view>
+    <Slideout :toggleSelectors="['.toggle-button', '.another-toggle']" @on-open="logger">
+		</Slideout>
+    </router-view>
   </div>
 </template>
 
 <script>
+import Slideout from 'vue-slideout'
 
 export default {
   name: 'app',
   components: {
+    Slideout
+  },
+  mounted: function () {
+      console.log(this.$children[0].slideout.isOpen())
+    },
+  methods: {
+      logger: function () {
+      console.log('open event')
+      }
   }
 }
 </script>
@@ -27,4 +40,15 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
+}
+
 </style>
