@@ -1,5 +1,7 @@
 <template>
   <div id="toolbar">
+  <Slideout :toggleSelectors="['.toggle-button', '.another-toggle']" @on-open="logger">
+
     <div id="top-bar-logo">
       <router-link to="/" style="float: left;"><img src="../assets/GoldeeLgo.png" height="100" width="160"></router-link>
     </div>
@@ -9,21 +11,42 @@
        <router-link to="/about" class="no-border-button" >About</router-link>
     </div>
 
-    <div id="login-join">
-       <router-link to="/register" class="no-border-button">Sign Up</router-link>
-       <router-link to="/login" class="rounded-cornor-button">LOGIN</router-link>
+    <div id="sidebar-id">
+
+
+       <nav id="menu">
+       			<div>Menu</div>
+       		</nav>
+          <header>
+            <div><button class="toggle-button">☰</button>Panel</div>
+          </header>
     </div>
+
+    </Slideout>
   </div>
 </template>
 
 <script>
+	import Slideout from 'vue-slideout'
+
   export default {
   	name: 'toolbar',
+    components: {
+      Slideout
+    },
   	data() {
   		return {
   			title: '#toolbar'
   		}
-  	}
+  	},
+    mounted: function () {
+      console.log(this.$children[0].slideout.isOpen())
+    },
+    methods: {
+      logger: function () {
+        console.log('open event')
+      }
+    }
   }
 </script>
 
@@ -85,4 +108,13 @@
 
 .rounded-cornor-button { border-radius: 20px; }
 
+.slideout-open,
+	.slideout-open body,
+	.slideout-open .slideout-panel {
+		overflow: hidden;
+	}
+
+	.slideout-open .slideout-menu {
+		display: block;
+	}
 </style>
