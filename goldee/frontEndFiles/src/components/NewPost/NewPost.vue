@@ -17,6 +17,15 @@
         </p>
         <button class="blue-button" v-on:click="submit">Submit</button>
       </div>
+      <div class="newpost-page">
+        <form method=post action="/post">
+          <dl>
+            {{ render_field(form.title) }}
+            {{ render_field(form.description) }}
+          </dl>
+          <p><input type=submit value=Register>
+        </form>
+      </div>
     </div>
   </div>
 </template>

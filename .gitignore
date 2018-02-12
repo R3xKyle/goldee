@@ -1,2 +1,5 @@
 goldee/credentials.py
+goldee/credentials.pyc
+goldee/__pycache__
+goldee/views/__pycache__
 goldee/frontEndFiles/node_modules
