@@ -1,4 +1,4 @@
-from goldee.models import db, User, Category
+from goldee.models import db, SimpleUser, Post, Category
 
 # insert, Get, Update
 
@@ -6,6 +6,21 @@ def insertSimple(insertModel):
     try:
         db.session.add(insertModel)
         db.session.commit()
+    except:
+        raise
+
+def getUser(userID):
+    try:
+        query = db.session.query(SimpleUser.Name, SimpleUser.Email).filter(SimpleUser.UserID == userID).one()
+        return query
+    except:
+        raise
+
+def getFeed(zipCode, tolerance):
+    try:
+        feedQuery = db.session.query(Post).filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
+         order_by(Post.PostDate.desc())
+        return feedQuery
     except:
         raise
 
@@ -40,27 +55,50 @@ def testDBEverything():
         raise
 '''
 
+
+def activatePendingPost(postHash):
+    try:
+        postQuery = db.session.query(PendingPost.PostID).\
+         filter(PendingPost.HashValue == postHash).one()
+        db.session.query(Post).filter(Post.PostID == postQuery).\
+         update({Post.Status: "Active"}, synchronize_session=False)
+        db.session.query(PendingPost).filter(PendingPost.HashValue == postHash).delete()
+    except:
+        raise
+
+def getNewPostID(authorName, postTitle, postDescription):
+    try:
+        postQuery = db.session.query(Post.PostID).\
+         filter(Post.AuthorName == authorName).\
+         filter(Post.Title == postTitle).\
+         filter(Post.Description == postDescription).\
+         order_by(Post.PostDate.desc()).one()
+        return postQuery
+    except:
+        raise
+
+'''
 def getSubcategories(categoryID):
     try:
         subcategoriesQuery = db.session.query(Subcategory.SubcategoryID, Subcategory.Name).\
-         filter_by(Subcategory.CategoryID == categoryID).\
+         filter(Subcategory.CategoryID == categoryID).\
          order_by(Subcategory.Name).all()
         subcategories = [(subcategory.SubcategoryID, subcategory.Name) for subcategory in subcategoriesQuery]
         return subcategories
     except:
         raise
-
+'''
 
 def getCategories():
     try:
         categoriesQuery = db.session.query(Category.CategoryID, Category.Name).\
          order_by(Category.Name).all()
-         categories = []
-         for cat in categoriesQuery:
-            category = Category()
-            category.CategoryID = cat.CategoryID
-            category.Name = cat.Name
-            categories.add(Category)
+        categories = []
+        for cat in categoriesQuery:
+           category = Category()
+           category.CategoryID = cat.CategoryID
+           category.Name = cat.Name
+           categories.add(Category)
         #categories = [(category.CategoryID, category.Name) for category in categoriesQuery]
         return categories
     except:
@@ -72,7 +110,7 @@ def getCategories():
 def getPost(postID):
     try:
         postQuery = db.session.query(Post.PostID, Post.AuthorName, Post.Title, Post.Description, Post.Picture, Post.CategoryID, Post.Date, Post.Type).\
-         filter(Post.PostID = postID).one()
+         filter(Post.PostID == postID).one()
     except:
         raise
     return postQuery

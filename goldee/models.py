@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 
 class SimpleUser(db.Model):
-	__tablename__ == "SimpleUser"
+	__tablename__ = "SimpleUser"
 	UserID = db.Column(db.Integer, primary_key = True)
 	Name = db.Column(db.String(50))
 	Email = db.Column(db.String(50))
@@ -38,11 +38,16 @@ class Category(db.Model):
 	Name = db.Column(db.String(100))
 	IsPublicOption = db.Column(db.Boolean)
 
+class PendingPost(db.Model):
+	__tablename__ = "PendingPost"
+	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"), primary_key = True)
+	HashValue = db.Column(db.String(64))
+
 class Post(db.Model):
 	__tablename__ = "Post"
 	PostID = db.Column(db.Integer, primary_key = True)
 	PostType = db.Column(db.Enum('Offer', 'Request'))
-	Status = db.Column(db.Enum('Active','Accepted', 'Complete', 'Canceled', 'Inactive'))
+	Status = db.Column(db.Enum('Active', 'Pending', 'Accepted', 'Complete', 'Canceled', 'Inactive'))
 	#AuthorID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
 	#HelperID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
 	AuthorName = db.Column(db.String(100))

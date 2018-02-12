@@ -1,22 +1,31 @@
 from flask import Blueprint, render_template, request
+from goldee.database import insertSimple, getUser, getFeed
 
 
-IndexBP = Blueprint('index', __name__, template_folder="../frontEndFiles")
+IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles")
 
-from goldee.model import SimpleUser
+
+from goldee.models import SimpleUser
 from goldee.database import insertSimple
-from goldee.forms import SplashPageForm
+from goldee.forms import SimpleUserForm
+
+'''
+@IndexBP.route('/', methods = ['GET', 'POST'])
+def index():
+	zip = 93410
+	return render_template("index.html", posts = getFeed(zip, 20))
+'''
 
 @IndexBP.route('/', methods = ['GET', 'POST'])
 def index():
-    form = SplashPageForm()
+    form = SimpleUserForm()
     if form.validate_on_submit():
         user = SimpleUser()
         user.Name = form.name.data
         user.Email = form.email.data
-        database.insertSimple(user)
-    return render_template('splashPage.html', form = form)
+        insertSimple(user)
+    return render_template('index.html', form = form)
 
 
-@IndexBP.route('/feed', methods = ['GET', 'POST'])
-def feed():
+
+
