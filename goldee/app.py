@@ -1,3 +1,8 @@
+import sys
+
+sys.path.append("..")
+
+
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -54,5 +59,5 @@ def shutdown_session(exception=None):
 	db.session.remove()
 
 if __name__ == "__main__":
-	main()
-	#app.run()
+	# main()
+	app.run()

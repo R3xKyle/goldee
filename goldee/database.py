@@ -55,12 +55,12 @@ def getCategories():
     try:
         categoriesQuery = db.session.query(Category.CategoryID, Category.Name).\
          order_by(Category.Name).all()
-         categories = []
-         for cat in categoriesQuery:
-            category = Category()
-            category.CategoryID = cat.CategoryID
-            category.Name = cat.Name
-            categories.add(Category)
+        categories = []
+        for cat in categoriesQuery:
+           category = Category()
+           category.CategoryID = cat.CategoryID
+           category.Name = cat.Name
+           categories.add(Category)
         #categories = [(category.CategoryID, category.Name) for category in categoriesQuery]
         return categories
     except:
@@ -71,8 +71,10 @@ def getCategories():
 
 def getPost(postID):
     try:
+        #tmp = Post.PostID
+        #Post.PostID = postID
         postQuery = db.session.query(Post.PostID, Post.AuthorName, Post.Title, Post.Description, Post.Picture, Post.CategoryID, Post.Date, Post.Type).\
-         filter(Post.PostID = postID).one()
+	filter(Post.PostID == postID).one()
     except:
         raise
     return postQuery

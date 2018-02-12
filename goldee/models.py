@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 
 class SimpleUser(db.Model):
-	__tablename__ == "SimpleUser"
+	__tablename__ = "SimpleUser"
 	UserID = db.Column(db.Integer, primary_key = True)
 	Name = db.Column(db.String(50))
 	Email = db.Column(db.String(50))

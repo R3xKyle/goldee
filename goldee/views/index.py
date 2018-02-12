@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request
 
 IndexBP = Blueprint('index', __name__, template_folder="../frontEndFiles")
 
-from goldee.model import SimpleUser
+from goldee.models import SimpleUser
 from goldee.database import insertSimple
 from goldee.forms import SplashPageForm
 
@@ -18,5 +18,5 @@ def index():
     return render_template('splashPage.html', form = form)
 
 
-@IndexBP.route('/feed', methods = ['GET', 'POST'])
-def feed():
+# @IndexBP.route('/feed', methods = ['GET', 'POST'])
+# def feed():
