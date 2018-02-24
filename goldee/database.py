@@ -66,6 +66,7 @@ def activatePendingPost(postHash):
          update({Post.Status: "Active"}, synchronize_session=False)
         db.session.query(PendingPost).filter(PendingPost.HashValue == postHash).\
          delete()
+        db.session.commit()
     except:
         raise
 
@@ -75,6 +76,7 @@ def reactivatePost(postID):
          filter(Post.PostID == postID).\
          filter(Post.Status == "Active").\
          update({Post.Status: "Active", Post.PostDate: db.func.now()}, synchronize_session=False)
+        db.session.commit()
     except:
         raise
 
@@ -83,6 +85,7 @@ def deletePost(postID):
         postQuery = db.session.query(Post).\
          filter(Post.PostID == postID).\
          delete()
+        db.session.commit()
     except:
         raise
 
@@ -104,6 +107,7 @@ def deleteExpiredPosts():
          filter(Post.Status == "Active").\
          filter(Post.PostDate < currentTime - timedelta(days = 7)).\
          delete()
+        db.session.commit()
     except:
         raise
 
