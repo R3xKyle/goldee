@@ -18,13 +18,7 @@ def index():
 
 @IndexBP.route('/', methods = ['GET', 'POST'])
 def index():
-    form = SimpleUserForm()
-    if form.validate_on_submit():
-        user = SimpleUser()
-        user.Name = form.name.data
-        user.Email = form.email.data
-        insertSimple(user)
-    return render_template('index.html', form = form)
+    return render_template('index.html')
 
 
 
