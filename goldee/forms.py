@@ -42,11 +42,12 @@ class PostForm(FlaskForm):
     #picture = FileField('Profile Picture', [FileRequired(), FileAllowed(['jpg', 'png'], 'Images only')])
     picture = FileField('Profile Picture', [FileAllowed(['jpg', 'png'], 'Images only')])
 
-'''
+
+
 class ReportForm(FlaskForm):
     reason = SelectField('Reason', choices = [('inappropriate', 'Inappropriate'), ('spam', 'Spam'), ('discrimination', 'Discrimination'), ('safety', 'Safety'), ('other', 'other')])
     body = StringField('Body', [validators.DataRequired(), validators.Length(max = 500)])
-'''
+
 #class ReviewForm(FlaskForm):
 
 #class CommunityForm(FlaskForm):

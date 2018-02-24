@@ -3,9 +3,9 @@ from werkzeug import secure_filename
 import hashlib
 import os
 
-from goldee.database import insertSimple, activatePendingPost, getPost, getNewPostID
-from goldee.forms import PostForm
-from goldee.models import Post, PendingPost
+from goldee.database import insertSimple, activatePendingPost, getPost, getNewPostID, reactivatePost
+from goldee.forms import PostForm, ReportForm
+from goldee.models import Post, PendingPost, ReportedPost
 from goldee.goldeeEmail import sendEmailNewPost
 
 PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles")
@@ -50,3 +50,19 @@ def newPendingPost(postHash):
 def getPost(postID):
 	post = getPost(postID) # may need to change how getPost is implemented b/c we might need to return model object instead of query object.
 	return render_template('postPage.html', post = post)
+
+@PostBP.route('/<postID>/renew', methods = ['GET', 'POST'])
+def renewPost(postID):
+	reactivatePost(postID)
+
+@PostBP.route('/<postID>/report', methods = ['GET', 'POST'])
+def reportPost(postID):
+	form = ReportForm()
+	if form.validate_on_submit():
+		report = ReportedPost()
+		report.PostID = postID
+		report.Reason = form.reason.data
+		report.Body = form.body.data
+		insertSimple(report)
+
+	return render_template('reportPost.html', form = form)

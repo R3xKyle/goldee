@@ -1,7 +1,16 @@
-from goldee.models import db, SimpleUser, Post, Category
+from goldee.models import db, Post, Category
+
+def getFeed(zipCode, tolerance):
+    try:
+        feedQuery = db.session.query(Post).filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
+         filter(Post.Status == "Active").\
+         order_by(Post.PostDate.desc())
+        return feedQuery
+    except:
+        raise
 
 # insert, Get, Update
-
+'''
 def insertSimple(insertModel):
     try:
         db.session.add(insertModel)
@@ -15,14 +24,7 @@ def getUser(userID):
         return query
     except:
         raise
-
-def getFeed(zipCode, tolerance):
-    try:
-        feedQuery = db.session.query(Post).filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
-         order_by(Post.PostDate.desc())
-        return feedQuery
-    except:
-        raise
+'''
 
 '''
 def testDBEverything():
@@ -62,9 +64,49 @@ def activatePendingPost(postHash):
          filter(PendingPost.HashValue == postHash).one()
         db.session.query(Post).filter(Post.PostID == postQuery).\
          update({Post.Status: "Active"}, synchronize_session=False)
-        db.session.query(PendingPost).filter(PendingPost.HashValue == postHash).delete()
+        db.session.query(PendingPost).filter(PendingPost.HashValue == postHash).\
+         delete()
     except:
         raise
+
+def reactivatePost(postID):
+    try:
+        postQuery = db.session.query(Post).\
+         filter(Post.PostID == postID).\
+         filter(Post.Status == "Active").\
+         update({Post.Status: "Active", Post.PostDate: db.func.now()}, synchronize_session=False)
+    except:
+        raise
+
+def deletePost(postID):
+    try:
+        postQuery = db.session.query(Post).\
+         filter(Post.PostID == postID).\
+         delete()
+    except:
+        raise
+
+def getExpiringPosts():
+    try:
+        currentTime = db.func.now()
+        postQuery = db.session.query(Post.PostID, Post.AuthorName, Post.Email, Post.Title).\
+         filter(Post.Status == "Active").\
+         filter(Post.PostDate.between(currentTime - timedelta(days = 6), currentTime - timedelta(days = 5))).\
+         all()
+        return postQuery
+    except:
+        raise
+
+def deleteExpiredPosts():
+    try:
+        currentTime = db.func.now()
+        postQuery = db.session.query(Post).\
+         filter(Post.Status == "Active").\
+         filter(Post.PostDate < currentTime - timedelta(days = 7)).\
+         delete()
+    except:
+        raise
+
 
 def getNewPostID(authorName, postTitle, postDescription):
     try:
@@ -76,6 +118,8 @@ def getNewPostID(authorName, postTitle, postDescription):
         return postQuery
     except:
         raise
+
+
 
 '''
 def getSubcategories(categoryID):

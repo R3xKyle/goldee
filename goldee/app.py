@@ -6,6 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 from goldee.authentication import login_manager
 from goldee.credentials import username, password, secretKey
 from goldee.models import db
+from goldee.sweep import DatabaseSweep
 
 db_url = 'mysql+pymysql://{0}:{1}@goldeedb.crkebn7vcqw4.us-west-1.rds.amazonaws.com:3306/goldee'.format(username, password)
 UPLOAD_FOLDER = 'images'
@@ -59,4 +60,5 @@ def shutdown_session(exception=None):
 
 if __name__ == "__main__":
 	#main()
+	DatabaseSweep()
 	application.run()
