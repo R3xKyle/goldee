@@ -2,6 +2,9 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import BooleanField, IntegerField, PasswordField, RadioField, SelectField, StringField, validators
 from goldee.database import getCategories
+import wtforms_json
+
+wtforms_json.init()
 '''
 class LoginForm(FlaskForm):
     email = StringField('Email', [validators.DataRequired()])

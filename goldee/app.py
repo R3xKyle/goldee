@@ -1,17 +1,31 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
 from goldee.authentication import login_manager
-from goldee.credentials import username, password, secretKey
+from goldee.credentials import databaseURI, username, password, secretKey
 from goldee.models import db
 from goldee.sweep import DatabaseSweep
 
-db_url = 'mysql+pymysql://{0}:{1}@goldeedb.crkebn7vcqw4.us-west-1.rds.amazonaws.com:3306/goldee'.format(username, password)
+db_url = 'mysql+pymysql://{0}:{1}@{2}'.format(username, password, databaseURI)
 UPLOAD_FOLDER = 'images'
 
-application = Flask(__name__)
+
+class CustomFlask(Flask):
+   jinja_options = Flask.jinja_options.copy()
+   jinja_options.update(dict(
+     block_start_string=‘{%‘,
+     block_end_string=‘%}‘,
+     variable_start_string=‘((‘,
+     variable_end_string=‘))‘,
+     comment_start_string="{\#",
+     comment_end_string="\#}",
+   ))
+
+
+application = CustomFlask(__name__)
 
 application.config['SQLALCHEMY_DATABASE_URI'] = db_url
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -24,6 +38,7 @@ login_manager.init_app(application)
 
 
 CSRFProtect(application)
+CORS(application)
 
 #from goldee.database import testDBEverything
 #from goldee.views.auth import AuthenticationBP

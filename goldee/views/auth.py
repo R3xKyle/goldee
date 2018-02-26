@@ -32,7 +32,7 @@ class AuthUser():
     def login(self):
         self.authenticated = True
 
-
+'''
 
 @AuthenticationBP.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -69,4 +69,4 @@ def signUp():
         database.insertSimple(user)
         return flask.redirect(flask.url_for('user.selectCategories'))
     return render_template('signUp.html', form = form)
-    
+'''

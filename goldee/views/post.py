@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from werkzeug import secure_filename
 import hashlib
 import os
@@ -12,7 +12,8 @@ PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles")
 
 @PostBP.route('/new', methods = ['GET', 'POST'])
 def newPost():
-	form = PostForm()
+	#form = PostForm()
+	form = PostForm.from_json(request.json)
 	if form.validate_on_submit():
 		post = Post()
 		post.Status = 'Pending'
@@ -40,7 +41,8 @@ def newPost():
 		insertSimple(pendingPost)
 
 		sendEmailNewPost(post.Email, post.AuthorName, post.Title, post.Description, postLink)
-	return render_template('index.html', form = form)
+	response = { 'form' : form }
+	return jsonify(response)
 
 @PostBP.route('/new/<postHash>', methods = ['GET'])
 def newPendingPost(postHash):
@@ -49,7 +51,8 @@ def newPendingPost(postHash):
 @PostBP.route('/<postID>', methods = ['GET'])
 def getPost(postID):
 	post = getPost(postID) # may need to change how getPost is implemented b/c we might need to return model object instead of query object.
-	return render_template('postPage.html', post = post)
+	response = { 'post' : post }
+	return jsonify(response)
 
 @PostBP.route('/<postID>/renew', methods = ['GET', 'POST'])
 def renewPost(postID):
@@ -57,7 +60,8 @@ def renewPost(postID):
 
 @PostBP.route('/<postID>/report', methods = ['GET', 'POST'])
 def reportPost(postID):
-	form = ReportForm()
+	#form = ReportForm()
+	form = ReportForm.from_json(request.json)
 	if form.validate_on_submit():
 		report = ReportedPost()
 		report.PostID = postID
@@ -65,4 +69,5 @@ def reportPost(postID):
 		report.Body = form.body.data
 		insertSimple(report)
 
-	return render_template('reportPost.html', form = form)
+	response = { 'form' : form }
+	return jsonify(response)
