@@ -3,11 +3,13 @@
     <toolbar></toolbar>
     <div class="page">
       <div class="newpost-page">
-        <p>Select a Category for your Post</p>
-        <p>All posts stay active for 30 days and must adhere to Goldee's guidelines.</p>
-        <p v-for="(tag, n) in tags":data-index="n">
-          <button v-on:click="tagClicked($event, n)" class="clickable-button">{{ tags[n] }}</button>
-        </p>
+        <h1>Select a category for your post</h1>
+        <h3>Posts stay active for 7 days and must adhere to <a href="">Goldee's guidelines</a>.</h3><br>
+        <div class="button-columns">
+          <p v-for="(tag, n) in tags":data-index="n">
+            <button v-on:click="tagClicked($event, n)" class="clickable-button">{{ tags[n] }}</button>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -56,53 +58,5 @@ window.onload = function() {
 </script>
 
 <style>
-
-.blue-button {
-  background: SkyBlue;
-  border-style: solid;
-  border-color: white;
-  color: white;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-
-.clickable-button {
-  background: Bisque;
-  border-style: solid;
-  border-color: white;
-  color: black;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-
-.text-input {
-  width: 100%;
-  height: 35px;
-  font-size: 20px;
-}
-
-.block-input {
-  width: 100%;
-  height: 350px;
-  font-size: 20px;
-}
-
-.page {
-  width: 100%;
-  text-align: center;
-}
-
-.newpost-page {
-  width: 60%;
-  text-align: center;
-}
-
+@import '../../newpost.css'
 </style>

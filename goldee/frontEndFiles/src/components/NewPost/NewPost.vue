@@ -94,9 +94,9 @@ window.onload = function() {
 
 </script>
 
-<style>
+<style>@import '../../newpost.css'
 
-.clickable-button {
+/*.clickable-button {
   background: Bisque;
   border-style: solid;
   border-color: white;
@@ -122,18 +122,6 @@ window.onload = function() {
   border-radius: 20px;
 }
 
-.text-input {
-  width: 100%;
-  height: 35px;
-  font-size: 20px;
-}
-
-.block-input {
-  width: 100%;
-  height: 350px;
-  font-size: 20px;
-}
-
 .page {
   width: 100%;
   text-align: center;
@@ -142,6 +130,6 @@ window.onload = function() {
 .newpost-page {
   width: 60%;
   text-align: center;
-}
+}*/
 
 </style>
