@@ -2,11 +2,14 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import BooleanField, IntegerField, PasswordField, RadioField, SelectField, StringField, validators
 from goldee.database import getCategories
+import wtforms_json
+
+wtforms_json.init()
 '''
 class LoginForm(FlaskForm):
     email = StringField('Email', [validators.DataRequired()])
     password = PasswordField('Password', [validators.DataRequired()])
-    stayLoggedIn = BooleanField('Stay Logged In') 
+    stayLoggedIn = BooleanField('Stay Logged In')
 
 
 class SignUpForm(FlaskForm):
@@ -27,10 +30,10 @@ class SignUpForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField('Title', [validators.DataRequired(), validators.Length(max = 100)])
     description = StringField('Description', [validators.optional(), validators.Length(max = 500)])
-    category = SelectField('Category', choices = getCategories())
+    category = SelectField('Category', [validators.optional()], choices = getCategories())
     authorName = StringField('Name', [validators.DataRequired(), validators.Length(max = 50)])
     email = StringField('Email', [validators.DataRequired(), validators.Email(), validators.Length(max = 100)])
-    postType = RadioField('Request', 'Offer')
+    postType = RadioField('Post Type', choices = [('Request', 'Request'), ('Offer', 'Offer')])
     #addressType = RadioField('Use Profile Address', 'Use Current Location', 'Use Custom Address')
     # Depending on addressType's value, the bottom fields will/won't be displayed
     # On front end, certain fields will need to be 'grayed-out' depending on if 'Use Custom Address' is selected
@@ -40,13 +43,14 @@ class PostForm(FlaskForm):
     state = StringField('State', [validators.Optional(), validators.Length(2)])
     zipCode = IntegerField('Zip', [validators.Optional(), validators.NumberRange(min = 10000, max = 99999)])
     #picture = FileField('Profile Picture', [FileRequired(), FileAllowed(['jpg', 'png'], 'Images only')])
-    picture = FileField('Profile Picture', [FileAllowed(['jpg', 'png'], 'Images only')])
+    picture = FileField('Profile Picture', [validators.optional(), FileAllowed(['jpg', 'png'], 'Images only')])
 
-'''
+
+
 class ReportForm(FlaskForm):
     reason = SelectField('Reason', choices = [('inappropriate', 'Inappropriate'), ('spam', 'Spam'), ('discrimination', 'Discrimination'), ('safety', 'Safety'), ('other', 'other')])
     body = StringField('Body', [validators.DataRequired(), validators.Length(max = 500)])
-'''
+
 #class ReviewForm(FlaskForm):
 
 #class CommunityForm(FlaskForm):
@@ -68,7 +72,7 @@ class ChangePasswordForm(FlaskForm):
     oldPassword = PasswordField('Old Password', [validators.DataRequired()])
     password = PasswordField('New Password', [validators.DataRequired(), validators.EqualTo('confirmPassword', message = 'Passwords must match'), validators.Length(min = 8)])
     confirmPassword = PasswordField('Repeat New Password')
-    
+
 '''
 class SimpleUserForm(FlaskForm):
     name = StringField('First Name', [validators.DataRequired(), validators.Length(max = 50)])

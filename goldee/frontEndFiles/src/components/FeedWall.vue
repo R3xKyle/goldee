@@ -8,16 +8,16 @@
       <p style="text-align:center; font-size:20px;">Want to find people near you? Sign up for Goldee. It's free!</p>
       <router-link to="/register" class="signUp-button">SIGN UP</router-link>
       <br></br>
-    <div style="height:80%;width:60%; overflow:auto; background-color:#F0EBE7; color:#1E3C46;
+      
+      <div style="height:80%;width:60%; overflow:auto; background-color:#F0EBE7; color:#1E3C46;
                 scrollbar-base-color:gold; font-family:sans-serif; padding:10px;">
 
       <div id="load-box">
       <div>
-        <p v-for="item in list" style="background-color:white; height:100px;">
-        Line:
-          <span v-text="item"></span>
-          </p>
-          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+        <p v-for="item in list" style="background-color: white; height:100px;">
+            hahaha
+            <div v-html="getpostHTML"></div>
+        </p>
       </div>
 
       </div>
@@ -32,28 +32,38 @@ import Toolbar from './Toolbar'
 import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
+  components: {
+    InfiniteLoading,
+    Toolbar
+  },
   data() {
     return {
       list: [],
+      getpostHTML: ''
     };
   },
   methods: {
     infiniteHandler($state) {
       setTimeout(() => {
         const temp = [];
-        for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
+        for (let i = this.list.length + 1; i <= this.list.length + 2; i++) {
           temp.push(i);
         }
         this.list = this.list.concat(temp);
         $state.loaded();
-      }, 1000);
+      }, 5);
+    },
+    loadData: function(event) {
+      this.$http.get('/post/19').then((response) => {
+        var jsondata = response.body;
+        this.getpostHTML = jsondata;
+      });
     },
   },
-  components: {
-    InfiniteLoading,
-    Toolbar
+  beforeMount() {
+    this.loadData()
   }
-};
+}
 
 </script>
 

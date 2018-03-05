@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request
 from goldee.database import insertSimple, getUser, getFeed
 
 
-IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles")
+IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles/dist")
 
 
 from goldee.models import SimpleUser
@@ -16,15 +16,13 @@ def index():
 	return render_template("index.html", posts = getFeed(zip, 20))
 '''
 
+@IndexBP.route('/<path:path>')
+def catch_all(path):
+    return render_template("index.html")
+
 @IndexBP.route('/', methods = ['GET', 'POST'])
 def index():
-    form = SimpleUserForm()
-    if form.validate_on_submit():
-        user = SimpleUser()
-        user.Name = form.name.data
-        user.Email = form.email.data
-        insertSimple(user)
-    return render_template('index.html', form = form)
+    return render_template('index.html')
 
 
 

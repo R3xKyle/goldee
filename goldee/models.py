@@ -5,6 +5,55 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+class Post(db.Model):
+	__tablename__ = "Post"
+	PostID = db.Column(db.Integer, primary_key = True)
+	PostType = db.Column(db.Enum('Offer', 'Request'))
+	Status = db.Column(db.Enum('Active', 'Pending', 'Accepted', 'Complete', 'Canceled', 'Inactive'))
+	#AuthorID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
+	#HelperID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
+	AuthorName = db.Column(db.String(100))
+	Email = db.Column(db.String(100))
+	Title = db.Column(db.String(100))
+	Description = db.Column(db.String(500))
+	CategoryID = db.Column(db.Integer, db.ForeignKey("Category.CategoryID"))
+	Address1 = db.Column(db.String(100))
+	Address2 = db.Column(db.String(100))
+	City = db.Column(db.String(100))
+	State = db.Column(db.String(2))
+	Zip = db.Column(db.Integer)
+	Picture = db.Column(db.String(100))
+	#EstimatedTime = db.Column(db.Enum('15 Minutes', '30 Minutes', '1 Hour', '2 Hours', '4 Hours', '8 Hours'))
+	PostDate = db.Column(db.DateTime, default = db.func.now())
+	#ExpirationDate = db.Column(db.DateTime) # This one is still in question
+	#AcceptanceDate = db.Column(db.DateTime)
+	#LastUpdated = db.Column(db.DateTime, default = db.func.now())
+
+class Category(db.Model):
+	__tablename__ = "Category"
+	CategoryID = db.Column(db.Integer, primary_key = True)
+	Name = db.Column(db.String(100))
+	IsPublicOption = db.Column(db.Boolean)
+
+class PendingPost(db.Model):
+	__tablename__ = "PendingPost"
+	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"), primary_key = True)
+	HashValue = db.Column(db.String(64))
+
+class PostCategory(db.Model):
+	__tablename__ = "PostCategory"
+	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"), primary_key = True)
+	CategoryID = db.Column(db.Integer, db.ForeignKey("Category.CategoryID"), primary_key = True)
+
+class ReportedPost(db.Model):
+	__tablename__ = "ReportedPost"
+	ReportID = db.Column(db.Integer, primary_key = True)
+	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"))
+	Reason = db.Column(db.Enum('Inappropriate', 'Spam', 'Discrimination', 'Illegal', 'Safety', 'Other'))
+	Body = db.Column(db.String(500))
+
+
+
 class SimpleUser(db.Model):
 	__tablename__ = "SimpleUser"
 	UserID = db.Column(db.Integer, primary_key = True)
@@ -31,41 +80,6 @@ class User(db.Model):
 	Bio = db.Column(db.String(500))
 	FamilyInfo = db.Column(db.String(500))
 	DisabilityInfo = db.Column(db.String(500))
-
-class Category(db.Model):
-	__tablename__ = "Category"
-	CategoryID = db.Column(db.Integer, primary_key = True)
-	Name = db.Column(db.String(100))
-	IsPublicOption = db.Column(db.Boolean)
-
-class PendingPost(db.Model):
-	__tablename__ = "PendingPost"
-	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"), primary_key = True)
-	HashValue = db.Column(db.String(64))
-
-class Post(db.Model):
-	__tablename__ = "Post"
-	PostID = db.Column(db.Integer, primary_key = True)
-	PostType = db.Column(db.Enum('Offer', 'Request'))
-	Status = db.Column(db.Enum('Active', 'Pending', 'Accepted', 'Complete', 'Canceled', 'Inactive'))
-	#AuthorID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
-	#HelperID = db.Column(db.Integer, db.ForeignKey("User.UserID"))
-	AuthorName = db.Column(db.String(100))
-	Email = db.Column(db.String(100))
-	Title = db.Column(db.String(100))
-	Description = db.Column(db.String(500))
-	CategoryID = db.Column(db.Integer, db.ForeignKey("Category.CategoryID"))
-	Address1 = db.Column(db.String(100))
-	Address2 = db.Column(db.String(100))
-	City = db.Column(db.String(100))
-	State = db.Column(db.String(2))
-	Zip = db.Column(db.Integer)
-	Picture = db.Column(db.String(100))
-	#EstimatedTime = db.Column(db.Enum('15 Minutes', '30 Minutes', '1 Hour', '2 Hours', '4 Hours', '8 Hours'))
-	PostDate = db.Column(db.DateTime, default = db.func.now())
-	#ExpirationDate = db.Column(db.DateTime) # This one is still in question
-	#AcceptanceDate = db.Column(db.DateTime)
-	#LastUpdated = db.Column(db.DateTime, default = db.func.now())
 
 class Conversation(db.Model):
 	__tablename__ = "Conversation"
@@ -150,11 +164,6 @@ class UserSkill(db.Model):
 	__tablename__ = "UserSkill"
 	UserID = db.Column(db.Integer, db.ForeignKey("User.UserID"), primary_key = True)
 	SkillID = db.Column(db.Integer, db.ForeignKey("Skill.SkillID"), primary_key = True)
-
-class PostCategory(db.Model):
-	__tablename__ = "PostCategory"
-	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"), primary_key = True)
-	CategoryID = db.Column(db.Integer, db.ForeignKey("Category.CategoryID"), primary_key = True)
 
 class PostCommunity(db.Model):
 	__tablename__ = "PostCommunity"

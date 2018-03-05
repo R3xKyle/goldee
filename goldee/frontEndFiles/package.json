@@ -24,6 +24,7 @@
     "vue": "^2.5.2",
     "vue-infinite-loading": "^2.2.3",
     "vue-picture-input": "^2.0.1",
+    "vue-resource": "^1.4.0",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.4.7",
     "xmlhttprequest": "^1.8.0"
