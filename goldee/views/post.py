@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, flash
 
 from goldee.models import Post, PendingPost, ReportedPost
 from goldee.forms import PostForm, ReportForm
-from goldee.database import insertSimple, activatePendingPost, getUserPost, getNewPostID, reactivatePost
+from goldee.database import insertSimple, activatePendingPost, getUserPost, reactivatePost
 
 #from goldee.goldeeEmail import sendEmailNewPost
 
@@ -27,15 +27,15 @@ def newPost():
 		post.State = form.state.data
 		post.Zip = form.zipCode.data
 
-        try:
-            postHash = insertNewPostAsPending(post)
-            postLink = "www.gogoldee.com/post/new/" + postHash
-        except:
-            flash("We're sorry, something went wrong. Please try again.")
-            return render_template('static/newpost_form.html', form = PostForm())
+		try:
+			postHash = insertNewPostAsPending(post)
+			postLink = "www.gogoldee.com/post/new/" + postHash
+		except:
+			flash("We're sorry, something went wrong. Please try again.")
+			return render_template('static/newpost_form.html', form = PostForm())
 
 		# sendEmailNewPost(post.Email, post.AuthorName, post.Title, post.Description, postLink)
-        flash("Your post has been saved. Please check your email to confirm posting!")
+		flash("Your post has been saved. Please check your email to confirm posting!")
 		return redirect('/newpost/contact')
 	return render_template('static/newpost_form.html', form = form)
 
@@ -43,7 +43,7 @@ def newPost():
 @PostBP.route('/new/<postHash>', methods = ['GET'])
 def newPendingPost(postHash):
 	postID = activatePendingPost(postHash)
-    flash("Your post has been activated!")
+	flash("Your post has been activated!")
 	return redirect('/post/' + postID)
 
 @PostBP.route('/<postID>', methods = ['GET'])
@@ -64,12 +64,13 @@ def reportPost(postID):
 		report.PostID = postID
 		report.Reason = form.reason.data
 		report.Body = form.body.data
-        try:
-		    insertSimple(report)
-        except:
-            flash("We're sorry, something went wrong. Please try again.")
-            return redirect('/' + postID + '/report') 
-        
-        return redirect('/')
+		try:
+			insertSimple(report)
+		except:
+			flash("We're sorry, something went wrong. Please try again.")
+			return redirect('/' + postID + '/report') 
+
+		flash("Your report has been submitted")
+		return redirect('/')
 
 	return render_template('static/reportpost_from.html', form = form)

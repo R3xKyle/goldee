@@ -1,11 +1,11 @@
 from goldee import db
 
 class Post(db.Model):
-    __tablename__ = "Post"
-    PostID = db.Column(db.Integer, primary_key = True)
-    PostType = db.Column(db.Enum('Offer', 'Request'))
+	__tablename__ = "Post"
+	PostID = db.Column(db.Integer, primary_key = True)
+	PostType = db.Column(db.Enum('Offer', 'Request'))
 	Status = db.Column(db.Enum('Active', 'Pending', 'Accepted', 'Complete', 'Canceled', 'Inactive'))
-    AuthorName = db.Column(db.String(100))
+	AuthorName = db.Column(db.String(100))
 	Email = db.Column(db.String(100))
 	Title = db.Column(db.String(100))
 	Description = db.Column(db.String(500))
@@ -15,16 +15,16 @@ class Post(db.Model):
 	City = db.Column(db.String(100))
 	State = db.Column(db.String(2))
 	Zip = db.Column(db.Integer)
-    PostDate = db.Column(db.DateTime, default = db.func.now())
+	PostDate = db.Column(db.DateTime, default = db.func.now())
 
 class Category(db.Model):
-    __tablename__ = "Category"
-    CategoryID = db.Column(db.Integer, primary_key = True)
-    Name = db.Column(db.String(100))
-    IsPublicOption = db.Column(db.Boolean)
+	__tablename__ = "Category"
+	CategoryID = db.Column(db.Integer, primary_key = True)
+	Name = db.Column(db.String(100))
+	IsPublicOption = db.Column(db.Boolean)
 
 class PendingPost(db.Model):
-    __tablename__ = "PendingPost"
+	__tablename__ = "PendingPost"
 	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"), primary_key = True)
 	HashValue = db.Column(db.String(64))
 

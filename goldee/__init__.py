@@ -1,11 +1,12 @@
 from flask import Flask
 
 from config import app_create
+from flask_sqlalchemy import SQLAlchemy
 
 application = app_create(__name__)
 db = SQLAlchemy(application)
 
-from goldee.sweep import DatabaseSweep
+#from goldee.sweep import DatabaseSweep
 #DatabaseSweep()
 
 from goldee import models, router
@@ -21,7 +22,7 @@ def teardown_request(exception):
 # Need to close the session after each request or application context shutdown
 @application.teardown_appcontext
 def shutdown_session(exception=None):
-    if exception:
-        db.session.rollback()
-	db.session.remove()
+	if exception:
+		db.session.rollback()
+		db.session.remove()
 
