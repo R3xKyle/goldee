@@ -6,7 +6,7 @@ from goldee.database import insertSimple, activatePendingPost, getUserPost, reac
 
 #from goldee.goldeeEmail import sendEmailNewPost
 
-PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles/dist")
+PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles/")
 
 @PostBP.route('/new', methods = ['GET', 'POST'])
 def newPost():

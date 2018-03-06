@@ -18,8 +18,8 @@ class Config(object):
 class CustomFlask(Flask):
 	jinja_options = Flask.jinja_options.copy()
 	jinja_options.update(dict(
-	 block_start_string='{%',
-	 block_end_string='%}',
+	 block_start_string='[[',
+	 block_end_string=']]',
 	 variable_start_string='((',
 	 variable_end_string='))',
 	 comment_start_string="{\#",
@@ -27,7 +27,7 @@ class CustomFlask(Flask):
 	))
 
 def app_create(name):
-	application = CustomFlask(name, static_folder = 'frontEndFiles/dist/static')
+	application = CustomFlask(name, static_folder = 'frontEndFiles')
 	application.config.from_object(Config)
 	CORS(application)
 	return application

@@ -11,7 +11,7 @@ def insertSimple(insertModel):
 		raise
 
 
-def getFeed(currentPage):
+def getFeed(currentPage, zipCode):
 	try:
 		tolerance = application.config['FEED_ZIP_TOLERANCE']
 		posts_per_page = application.config['POSTS_PER_PAGE']

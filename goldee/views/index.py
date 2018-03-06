@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash, redirect
 
 from goldee.database import insertSimple, getFeed
 
-IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles/dist")
+IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles")
 
 @IndexBP.route('/', methods = ['GET'])
 def index():
@@ -18,5 +18,5 @@ def feed():
 	except:
 		flash("We're sorry, something went wrong.")
 		return redirect('/')
-	return render_template('feedpage.html', posts = posts.items, 
+	return render_template('static/feedpage.html', posts = posts.items, 
 							next_url = next_url, prev_url = prev_url)
