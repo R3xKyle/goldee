@@ -62,7 +62,7 @@ def reactivatePost(postID):
 		postQuery = db.session.query(Post).\
 		 filter(Post.PostID == postID).\
 		 filter(Post.Status == "Active").\
-		 update({Post.Status: "Active", Post.PostDate: db.func.now()}, synchronize_session=False)
+		 update({Post.PostDate: db.func.now()}, synchronize_session=False)
 		db.session.commit()
 	except:
 		raise

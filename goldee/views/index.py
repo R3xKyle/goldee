@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect
 
 from goldee.database import insertSimple, getFeed
 
-IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles")
+IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles/dist")
 
 @IndexBP.route('/', methods = ['GET'])
 def index():
@@ -20,3 +20,7 @@ def feed():
 		return redirect('/')
 	return render_template('static/feedpage.html', posts = posts.items, 
 							next_url = next_url, prev_url = prev_url)
+
+@IndexBP.route('/<path:path>')
+def catch_all(path):
+	return render_template("index.html")
