@@ -76,46 +76,5 @@ window.onload = function() {
 </script>
 
 <style>
-.clickable-button {
-  background: Bisque;
-  border-style: solid;
-  border-color: white;
-  color: black;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-.blue-button {
-  background: SkyBlue;
-  border-style: solid;
-  border-color: white;
-  color: white;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-.text-input {
-  width: 100%;
-  height: 35px;
-  font-size: 20px;
-}
-.block-input {
-  width: 100%;
-  height: 350px;
-  font-size: 20px;
-}
-.page {
-  width: 100%;
-  text-align: center;
-}
-.newpost-page {
-  width: 60%;
-  text-align: center;
-}
+  @import 'newpost.css';
 </style>
