@@ -24,6 +24,20 @@ def getFeed(currentPage, zipCode):
 		raise
 	return posts
 
+def getFeedWithQuery(curerntPage, zipCode, query):
+	try:
+		tolerance = application.config['FEED_ZIP_TOLERANCE']
+		posts_per_page = application.config['POSTS_PER_PAGE']
+		posts = db.session.query(Post.PostID, Post.PostType, post.AuthorName, post.Title, post.Description, post.PostDate).\
+		 filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
+		 filter(Post.Status == "Active").\
+		 filter(Post.Title.like(f'%{query}%'))
+		 order_by(Post.PostDate.desc()).\
+		 paginate(currentPage, posts_per_page, False)
+	except:
+		raise
+	return posts
+
 
 def insertNewPostAsPending(post):
 	try:

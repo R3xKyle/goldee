@@ -11,8 +11,12 @@ def index():
 @IndexBP.route('/feed',  methods = ['GET'])
 def feed():
 	page = request.args.get('page', 1, type=int)
+	query = requests.args.get('query')
 	try:
-		posts = getFeed(page, 93410)
+		if query != None:
+			posts = getFeedWithQuery(page, 93410, query)
+		else:
+			posts = getFeed(page, 93410)
 		next_url = url_for('feed', page = posts.next_num) if posts.has_next else None
 		prev_url = url_for('feed', page = posts.prev_num) if posts.has_prev else None
 	except:
