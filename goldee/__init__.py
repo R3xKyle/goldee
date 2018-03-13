@@ -2,9 +2,11 @@ from flask import Flask
 
 from config import app_create
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 application = app_create(__name__)
 db = SQLAlchemy(application)
+mail = Mail(app)
 
 #from goldee.sweep import DatabaseSweep
 #DatabaseSweep()

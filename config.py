@@ -4,8 +4,8 @@ from flask_cors import CORS
 
 from goldee.credentials import databaseURI, username, password, secretKey
 
-db_url = 'mysql+pymysql://{0}:{1}@{2}'.format(username, password, databaseURI)
-#db_url = f'mysql+pysql://{username}:{password}@{databaseURI}' #this is for python 3
+#db_url = 'mysql+pymysql://{0}:{1}@{2}'.format(username, password, databaseURI)
+db_url = f'mysql+pysql://{username}:{password}@{databaseURI}' #this is for python 3
 
 class Config(object):
 	SQLALCHEMY_DATABASE_URI = db_url
@@ -13,6 +13,15 @@ class Config(object):
 	
 	POSTS_PER_PAGE = 5
 	FEED_ZIP_TOLERANCE = 20
+
+	#flask-mail
+	MAIL_SERVER = 'smtp.gmail.com'
+	MAIL_PORT = 587
+	MAIL_USE_SSL = False
+	MAIL_USERNAME = f'{username}'
+	MAIL_PASSWORD = f'{password}'
+	MAIL_USE_TLS = True
+	DEFAULT_MAIL_SENDER='Goldee'
 
 
 class CustomFlask(Flask):
