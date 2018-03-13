@@ -10,7 +10,8 @@
     </div>
 
     <div id="login-join">
-       <router-link to="/register" class="no-border-button">Sign Up</router-link>
+       <router-link to="/newpost" class="no-border-button">New Post</router-link>
+      <router-link to="/feedwall" class="no-border-button">Feed Wall</router-link>
        <router-link to="/login" class="rounded-cornor-button">LOGIN</router-link>
     </div>
   </div>
