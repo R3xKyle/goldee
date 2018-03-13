@@ -1,0 +1,17 @@
+<html>
+  <body>
+    [[ from "/static/_formhelpers.html" import render_field ]]
+    <form action="/post/new" method=post>
+      <input type="hidden" name="csrf_token" value="(( csrf_token() ))" />
+      <dl>
+        (( render_field(form.title) ))
+        (( render_field(form.description) ))
+        (( render_field(form.email) ))
+        (( render_field(form.authorName) ))
+        (( render_field(form.category) ))
+        (( render_field(form.postType) ))
+      </dl>
+      <p><input type=submit value=Post></p>
+    </form>
+  </body>
+</html>

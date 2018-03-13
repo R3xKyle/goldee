@@ -1,0 +1,39 @@
+<html>
+  <table>
+    <body>
+      <ul id='posts'>
+         [[ for item in posts ]]
+         <li class="post-list">
+           <p class="top-line">Author: (( item.AuthorName ))</p>
+           <p><b>(( item.Title ))</b></p>
+           <p>(( item.Description ))</p>
+         </li>
+         [[ endfor ]]
+      </ul>
+    </body>
+  </table>
+</html>
+
+<style>
+
+p {
+  margin: 2px;
+  text-align: left;
+  margin-left: 8px;
+}
+
+.top-line {
+  margin-top: 8px;
+}
+
+.post-list {
+  background-color: white;
+  height: 90px;
+  margin-top: 2.5%;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+</style>
