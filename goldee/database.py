@@ -4,6 +4,7 @@ from goldee import db, application
 from goldee.models import Post, Category, PendingPost, ReportedPost
 import datetime
 
+# Inserts a simple model into the database
 def insertSimple(insertModel):
 	try:
 		db.session.add(insertModel)
@@ -11,7 +12,7 @@ def insertSimple(insertModel):
 	except:
 		raise
 
-
+# Returns the paginated feed containing posts within the FEED_ZIP_TOLERANCE of zipCode
 def getFeed(currentPage, zipCode):
 	try:
 		if zipCode == None:
@@ -27,6 +28,7 @@ def getFeed(currentPage, zipCode):
 		raise
 	return posts
 
+# Returns the paginated feed containing posts within the FEED_ZIP_TOLERANCE of zipCode and whose Title contains query
 def getFeedWithQuery(curerntPage, zipCode, query):
 	try:
 		if zipCode == None:
@@ -43,7 +45,8 @@ def getFeedWithQuery(curerntPage, zipCode, query):
 		raise
 	return posts
 
-
+# This inserts a pending post into the database
+# This is called on new post creation, needs to be activated with email link
 def insertNewPostAsPending(post):
 	try:
 		db.session.add(post)
@@ -61,7 +64,7 @@ def insertNewPostAsPending(post):
 
 	return postIDHash
 
-
+# Checks PendingPost table for postHash and activates the corresponding post in Post table.
 def activatePendingPost(postHash):
 	try:
 		postID = db.session.query(PendingPost.PostID).\
@@ -76,6 +79,7 @@ def activatePendingPost(postHash):
 
 	return postID
 
+# Extends the post's life by 7 days
 def reactivatePost(postID):
 	try:
 		postQuery = db.session.query(Post).\
@@ -86,6 +90,7 @@ def reactivatePost(postID):
 	except:
 		raise
 
+# Returns all posts that have a current lifetime of 5-6 days.
 def getExpiringPosts():
 	try:
 		currentTime = db.func.now()
@@ -97,6 +102,7 @@ def getExpiringPosts():
 	except:
 		raise
 
+# Delete all posts that are active with a lifetime > 7 days.
 def deleteExpiredPosts():
     try:
         currentTime = datetime.datetime.now()
@@ -107,7 +113,8 @@ def deleteExpiredPosts():
         db.session.commit()
     except:
         raise
-   
+
+# returns a list of all the categories in the database in the format (categoryID, categoryName)
 def getCategories():
 	try:
 		categoriesQuery = db.session.query(Category.CategoryID, Category.Name).\
@@ -119,6 +126,7 @@ def getCategories():
 	except:
 		raise
 
+# Returns a post model without sensitive data
 def getUserPost(postID):
 	try:
 		postQuery = db.session.query(Post.PostID, Post.AuthorName, Post.Title, Post.Description, Post.CategoryID, Post.PostDate, Post.PostType).\
@@ -135,6 +143,7 @@ def getUserPost(postID):
 	post.postDate = postQuery.PostDate
 	return post
 
+# Returns a post model with all data
 def getPostDetails(postID):
 	try:
 		postQuery = db.session.query(Post).\

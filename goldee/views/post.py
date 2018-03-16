@@ -3,14 +3,18 @@ from flask import Blueprint, render_template, request, redirect, flash
 from goldee.models import Post, PendingPost, ReportedPost
 from goldee.forms import PostForm, ReportForm, PostReplyForm
 from goldee.database import insertSimple, activatePendingPost, getUserPost, reactivatePost, getPostDetails
-from goldee.email import sendEmailNewPost, sendEmailNewPostReply
+from goldee.goldeeEmail import sendEmailNewPost, sendEmailNewPostReply
 
-PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles/")
+# Creates blueprints for all routes with prefix /post
+PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles/dist")
 
+# Mapped to /post/new endpoint
+# Redirects on success
+# Returns file at frontEndFiles/dist/static/newpost_form.html with rendered form
 @PostBP.route('/new', methods = ['GET', 'POST'])
 def newPost():
 	form = PostForm()
-	if form.validate_on_submit():
+	if form.validate_on_submit(): # if Post request and all fields validate
 		post = Post()
 		post.Status = 'Pending'
 		post.PostType = form.postType.data
@@ -26,6 +30,7 @@ def newPost():
 		post.State = form.state.data
 		post.Zip = form.zipCode.data
 
+		# create posthash for pending post
 		try:
 			postHash = insertNewPostAsPending(post)
 			postLink = "www.gogoldee.com/post/new/" + postHash
@@ -38,23 +43,26 @@ def newPost():
 		return redirect('/newpost/contact')
 	return render_template('static/newpost_form.html', form = form)
 
-
+# Activates a pending post. Only way to get to this link is through email
 @PostBP.route('/new/<postHash>', methods = ['GET'])
 def newPendingPost(postHash):
 	postID = activatePendingPost(postHash)
 	flash("Your post has been activated!")
 	return redirect('/post/' + postID)
 
+# Returns the post with the provided postID
 @PostBP.route('/<postID>', methods = ['GET'])
 def getPost(postID):
 	post = getUserPost(postID) # may need to change how getPost is implemented b/c we might need to return model object instead of query object.
 	return render_template('static/getpost_form.html', post = post)
 
+# Renews the post with the provided postID
 @PostBP.route('/<postID>/renew', methods = ['GET'])
 def renewPost(postID):
 	reactivatePost(postID)
 	return redirect('/post/' + postID)
 
+# Returns a form to report the post with the provided postID and inserts into database
 @PostBP.route('/<postID>/report', methods = ['GET', 'POST'])
 def reportPost(postID):
 	form = ReportForm()
@@ -74,6 +82,7 @@ def reportPost(postID):
 
 	return render_template('static/reportpost_form.html', form = form)
 
+# Returns a form to reply to the post with provided postID. Sends the post author an email.
 @PostBP.route('/<postID>/reply', methods = ['GET', 'POST'])
 def replyPost(postID):
 	form = PostReplyForm()

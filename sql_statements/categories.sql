@@ -1,0 +1,18 @@
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Announcements', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Rides', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Events', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Sports & Fitness', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Food', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Meet People', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Volunteer', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Lend & Borrow', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Classes & Tutoring', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Mentorship & Support', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Handy Help', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Homestays & Roommates', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Child Care', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Pet Care', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Elderly Care', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Help', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Gigs', 1);
+INSERT INTO Category (Name, IsPublicOption) VALUES ('Other', 1);

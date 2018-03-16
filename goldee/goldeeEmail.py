@@ -1,27 +1,31 @@
 from flask_mail import Message
-from goldee import mail
-import goldee.credentials
+from goldee import mail, application
+import goldee.credentials as credentials
 
+# Generates the email header
 def generateEmailHeader(toAddress, subject):
-    msg = Message(subject, sender=credentials.email, recepients=toAddress)
+    msg = Message(subject, sender=("Goldee", credentials.email), recipients=[toAddress])
+
     return msg
 
+# attaches plaintext and html version of message to email message
 def attachMessage(msg, plaintext, html):
-    msg.body(plaintext)
-    msg.html(html)
+    msg.body = plaintext
+    msg.html = html
     
     return msg
 
+# Generates and sends the email for a new post
 def sendEmailNewPost(toAddress, toName, postHeadline, postDescription, postLink):
     msg = generateEmailHeader(toAddress, "Verify Goldee Posting")
 
     plaintext = generatePlaintextNewPost(toName, postHeadline, postDescription, postLink)
     html = generateHTMLNewPost(toName, postHeadline, postDescription, postLink)
-
     msg = attachMessage(msg, plaintext, html)
     
-    sendEmail(toAddress, msg)
+    sendEmail(msg)
 
+# Generates and sends the email for a new post reply
 def sendEmailNewPostReply(toAddress, toName, postHeadline, contactEmail, contactName, contactMessage):
     msg = generateEmailHeader(toAddress, "New Reply to Your Goldee Post")
 
@@ -32,6 +36,7 @@ def sendEmailNewPostReply(toAddress, toName, postHeadline, contactEmail, contact
 
     sendEmail(msg)
 
+# Generaetes and sends the email for an expiring post
 def sendEmailPostExpiring(toAddress, toName, postHeadline, renewLink):
     msg = generateEmailHeader(toAddress, "Going Goldee Gone!")
 
@@ -42,9 +47,12 @@ def sendEmailPostExpiring(toAddress, toName, postHeadline, renewLink):
 
     sendEmail(msg)
 
+# Sends the email within the application context
 def sendEmail(msg):
-    mail.send(msg)
+    with application.app_context():
+        mail.send(msg)
 
+# Generates the plaintext message for new post
 def generatePlaintextNewPost(name, headline, description, link):
     plaintext = "Hi " + name + ",\n\n"
     plaintext += "Thank you for posting with Goldee. Here's what your post will say:\n\n"
@@ -58,6 +66,7 @@ def generatePlaintextNewPost(name, headline, description, link):
     plaintext += "Thanks,\nGoldee\n"
     return plaintext
 
+# Generates the html message for new post
 def generateHTMLNewPost(name, headline, description, link):
     html = "<html><head></head><body><p>Hi " + name + ",<br>Thank you for posting with Goldee. "
     html += "Here's what your post will say:<br><br>"
@@ -73,6 +82,7 @@ def generateHTMLNewPost(name, headline, description, link):
     html += "</p></body></html>"
     return html
 
+# Generates the plaintext message for new post reply
 def generatePlaintextNewPostReply(name, contactName, contactEmail, postHeadline, contactMessage):
     plaintext = "Hi " + name + ",\n\n"
     plaintext += contactName + " has responded to your following post: " + postHeadline + ".\n"
@@ -85,6 +95,7 @@ def generatePlaintextNewPostReply(name, contactName, contactEmail, postHeadline,
     plaintext += "Thanks,\nGoldee\n"
     return plaintext
 
+# Generates the html message for new post reply
 def generateHTMLNewPostReply(name, contactName, contactEmail, postHeadline, contactMessage):
     html = "<html><head></head><body><p>Hi " + name + ",<br><br>"
     html += contactName + " has responded to your following post: " + postHeadline + ".<br>"
@@ -99,6 +110,7 @@ def generateHTMLNewPostReply(name, contactName, contactEmail, postHeadline, cont
     html += "</p></body></html>"
     return html
 
+# Generates the plaintext message for post expiring
 def generatePlaintextPostExpiring(name, postHeadline, link):
 	plaintext = "Hi " + name + ",\n\n"
 	plaintext += "In order to ensure fresh content on Goldee, all posts are deleted after seven days. "
@@ -111,6 +123,7 @@ def generatePlaintextPostExpiring(name, postHeadline, link):
 	plaintext += "P.S. As always, if you have a question, comment, or feedback, please share it by replying to this email!"
 	return plaintext
 
+# Generaetes the html message for post expiring
 def generateHTMLPostExpiring(name, postHeadline, link):
     html = "<html><head></head><body><p>Hi " + name + ",<br><br>"
     html += "In order to ensure fresh content on Goldee, all posts are deleted after seven days. "
@@ -123,6 +136,3 @@ def generateHTMLPostExpiring(name, postHeadline, link):
     html += "Thanks,<br>Goldee<br>"
     html += "P.S. As always, if you have a question, comment, or feedback, please share it by replying to this email!"
     return html
-
-if __name__ == "__main__":
-    main()
