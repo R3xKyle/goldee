@@ -8,4 +8,5 @@ from goldee.views.post import PostBP
 
 # Registers blueprints
 application.register_blueprint(IndexBP)
+application.register_blueprint(AccountBP)
 application.register_blueprint(PostBP, url_prefix = '/post')

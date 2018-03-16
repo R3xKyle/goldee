@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, flash
+from flask_login import current_user
 
 from goldee.models import Post, PendingPost, ReportedPost
 from goldee.forms import PostForm, ReportForm, PostReplyForm
@@ -12,6 +13,7 @@ PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles/dist")
 # Redirects on success
 # Returns file at frontEndFiles/dist/static/newpost_form.html with rendered form
 @PostBP.route('/new', methods = ['GET', 'POST'])
+@login_required
 def newPost():
 	form = PostForm()
 	if form.validate_on_submit(): # if Post request and all fields validate
@@ -19,11 +21,9 @@ def newPost():
 		post.Status = 'Pending'
 		post.PostType = form.postType.data
 		post.Title = form.title.data
+		post.UserID = current_user.get_id()
 		post.Description = form.description.data
-
 		post.CategoryID = form.category.data
-		post.AuthorName = form.authorName.data
-		post.Email = form.email.data
 		post.Address1 = form.address1.data
 		post.Address2 = form.address2.data
 		post.City =  form.city.data

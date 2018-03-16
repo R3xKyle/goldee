@@ -4,6 +4,7 @@ from flask import Flask
 from config import app_create
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_login import LoginManager
 
 # Creates the application with configuration options specified in Config.py
 application = app_create(__name__)
@@ -11,6 +12,8 @@ application = app_create(__name__)
 db = SQLAlchemy(application)
 # Bind Mail instance to flask application
 mail = Mail(application)
+login = LoginManager(application)
+login.login_view = 'login'
 
 # Starts the database sweep that runs every day
 from goldee.sweep import DatabaseSweep
