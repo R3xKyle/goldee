@@ -5,7 +5,7 @@ from flask_cors import CORS
 from goldee.credentials import databaseURI, username, password, secretKey
 
 #db_url = 'mysql+pymysql://{0}:{1}@{2}'.format(username, password, databaseURI)
-db_url = f'mysql+pysql://{username}:{password}@{databaseURI}' #this is for python 3
+db_url = f'mysql+pymysql://{username}:{password}@{databaseURI}' #this is for python 3
 
 class Config(object):
 	SQLALCHEMY_DATABASE_URI = db_url

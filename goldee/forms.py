@@ -1,9 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, IntegerField, PasswordField, RadioField, SelectField, StringField, validators
 from goldee.database import getCategories
-import wtforms_json
-
-wtforms_json.init()
 
 class PostForm(FlaskForm):
 	title = StringField('Title', [validators.DataRequired(), validators.Length(max = 100)])

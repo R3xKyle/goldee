@@ -11,7 +11,7 @@ def index():
 @IndexBP.route('/feed',  methods = ['GET'])
 def feed():
 	page = request.args.get('page', 1, type=int)
-	query = requests.args.get('query')
+	query = request.args.get('query')
 	try:
 		if query != None:
 			posts = getFeedWithQuery(page, 93410, query)
