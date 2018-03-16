@@ -2,6 +2,7 @@ import hashlib
 
 from goldee import db, application
 from goldee.models import Post, Category, PendingPost, ReportedPost
+import datetime
 
 def insertSimple(insertModel):
 	try:
@@ -13,6 +14,8 @@ def insertSimple(insertModel):
 
 def getFeed(currentPage, zipCode):
 	try:
+		if zipCode == None:
+			zipCode = application.config['DEFAULT_ZIP_CODE']
 		tolerance = application.config['FEED_ZIP_TOLERANCE']
 		posts_per_page = application.config['POSTS_PER_PAGE']
 		posts = db.session.query(Post.PostID, Post.PostType, post.AuthorName, post.Title, post.Description, post.PostDate).\
@@ -26,12 +29,14 @@ def getFeed(currentPage, zipCode):
 
 def getFeedWithQuery(curerntPage, zipCode, query):
 	try:
+		if zipCode == None:
+			zipCode = application.config['DEFAULT_ZIP_CODE']
 		tolerance = application.config['FEED_ZIP_TOLERANCE']
 		posts_per_page = application.config['POSTS_PER_PAGE']
 		posts = db.session.query(Post.PostID, Post.PostType, post.AuthorName, post.Title, post.Description, post.PostDate).\
 		 filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
 		 filter(Post.Status == "Active").\
-		 filter(Post.Title.like(f'%{query}%'))
+		 filter(Post.Title.like(f'%{query}%')).\
 		 order_by(Post.PostDate.desc()).\
 		 paginate(currentPage, posts_per_page, False)
 	except:
@@ -86,12 +91,22 @@ def getExpiringPosts():
 		currentTime = db.func.now()
 		postQuery = db.session.query(Post.PostID, Post.AuthorName, Post.Email, Post.Title).\
 		 filter(Post.Status == "Active").\
-		 filter(Post.PostDate.between(currentTime - timedelta(days = 6), currentTime - timedelta(days = 5))).\
+		 filter(Post.PostDate.between(currentTime - datetime.timedelta(days = 6), currentTime - datetime.timedelta(days = 5))).\
 		 all()
 		return postQuery
 	except:
 		raise
 
+def deleteExpiredPosts():
+    try:
+        currentTime = datetime.datetime.now()
+        postQuery = db.session.query(Post).\
+         filter(Post.Status == "Active").\
+         filter(Post.PostDate < currentTime - datetime.timedelta(days = 7)).\
+         delete()
+        db.session.commit()
+    except:
+        raise
    
 def getCategories():
 	try:
@@ -119,3 +134,14 @@ def getUserPost(postID):
 	post.AuthorName = postQuery.AuthorName
 	post.postDate = postQuery.PostDate
 	return post
+
+def getPostDetails(postID):
+	try:
+		postQuery = db.session.query(Post).\
+		 filter(Post.PostID == postID).one()
+	except:
+		raise
+	return postQuery
+
+def dropAllTables():
+	db.drop_all()

@@ -6,10 +6,10 @@ from flask_mail import Mail
 
 application = app_create(__name__)
 db = SQLAlchemy(application)
-mail = Mail(app)
+mail = Mail(application)
 
-#from goldee.sweep import DatabaseSweep
-#DatabaseSweep()
+from goldee.sweep import DatabaseSweep
+DatabaseSweep()
 
 from goldee import models, router
 

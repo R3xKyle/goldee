@@ -11,6 +11,7 @@ class Config(object):
 	SQLALCHEMY_DATABASE_URI = db_url
 	SECRET_KEY = os.environ.get('SECRET_KEY') or secretKey
 	
+	DEFAULT_ZIP_CODE = 93410
 	POSTS_PER_PAGE = 5
 	FEED_ZIP_TOLERANCE = 20
 

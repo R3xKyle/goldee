@@ -18,3 +18,8 @@ class PostForm(FlaskForm):
 class ReportForm(FlaskForm):
 	reason = SelectField('Reason', choices = [('inappropriate', 'Inappropriate'), ('spam', 'Spam'), ('discrimination', 'Discrimination'), ('safety', 'Safety'), ('other', 'other')])
 	body = StringField('Body', [validators.DataRequired(), validators.Length(max = 500)])
+
+class PostReplyForm(FlaskForm):
+	authorName = StringField('Name', [validators.DataRequired(), validators.Length(max = 50)])
+	message = StringField('Message', [validators.DataRequired(), validators.Length(max = 1000)])
+	email = StringField('Email', [validators.DataRequired(), validators.Email(), validators.Length(max = 100)])

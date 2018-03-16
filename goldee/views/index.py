@@ -12,11 +12,12 @@ def index():
 def feed():
 	page = request.args.get('page', 1, type=int)
 	query = request.args.get('query')
+	zipCode = request.args.get('zip')
 	try:
 		if query != None:
-			posts = getFeedWithQuery(page, 93410, query)
+			posts = getFeedWithQuery(page, zipCode, query)
 		else:
-			posts = getFeed(page, 93410)
+			posts = getFeed(page, zipCode)
 		next_url = url_for('feed', page = posts.next_num) if posts.has_next else None
 		prev_url = url_for('feed', page = posts.prev_num) if posts.has_prev else None
 	except:
@@ -24,6 +25,11 @@ def feed():
 		return redirect('/')
 	return render_template('static/feedpage.html', posts = posts.items, 
 							next_url = next_url, prev_url = prev_url)
+
+
+@IndexBP.route('/about', methods = ['GET'])
+def about():
+	return render_template('static/aboutpage.html')
 
 @IndexBP.route('/<path:path>')
 def catch_all(path):

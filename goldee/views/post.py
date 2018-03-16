@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, flash
 
 from goldee.models import Post, PendingPost, ReportedPost
-from goldee.forms import PostForm, ReportForm
-from goldee.database import insertSimple, activatePendingPost, getUserPost, reactivatePost
-
-#from goldee.goldeeEmail import sendEmailNewPost
+from goldee.forms import PostForm, ReportForm, PostReplyForm
+from goldee.database import insertSimple, activatePendingPost, getUserPost, reactivatePost, getPostDetails
+from goldee.email import sendEmailNewPost, sendEmailNewPostReply
 
 PostBP = Blueprint('/post', __name__, template_folder = "../frontEndFiles/")
 
@@ -34,7 +33,7 @@ def newPost():
 			flash("We're sorry, something went wrong. Please try again.")
 			return render_template('static/newpost_form.html', form = PostForm())
 
-		# sendEmailNewPost(post.Email, post.AuthorName, post.Title, post.Description, postLink)
+		sendEmailNewPost(post.Email, post.AuthorName, post.Title, post.Description, postLink)
 		flash("Your post has been saved. Please check your email to confirm posting!")
 		return redirect('/newpost/contact')
 	return render_template('static/newpost_form.html', form = form)
@@ -73,4 +72,26 @@ def reportPost(postID):
 		flash("Your report has been submitted")
 		return redirect('/')
 
-	return render_template('static/reportpost_from.html', form = form)
+	return render_template('static/reportpost_form.html', form = form)
+
+@PostBP.route('/<postID>/reply', methods = ['GET', 'POST'])
+def replyPost(postID):
+	form = PostReplyForm()
+	if form.validate_on_submit():
+		post = getPostDetails(postID)
+		toAddress = post.Email
+		toName = post.AuthorName
+		postHeadline = post.Title
+		contactEmail = form.email.data
+		contactName = form.name.data
+		contactMessage = form.messsage.data
+
+		sendEmailNewPostReply(toAddress, toName, postHeadline, contactEmail, contactName, contactMessage)
+
+		flash("Your reply has been sent!")
+		return redirect('/')
+	
+	return render_template('static/replypost_form.html')
+
+
+

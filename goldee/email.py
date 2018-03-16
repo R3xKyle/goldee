@@ -1,6 +1,6 @@
 from flask_mail import Message
-from app import mail
-import credentials
+from goldee import mail
+import goldee.credentials
 
 def generateEmailHeader(toAddress, subject):
     msg = Message(subject, sender=credentials.email, recepients=toAddress)
@@ -113,16 +113,16 @@ def generatePlaintextPostExpiring(name, postHeadline, link):
 
 def generateHTMLPostExpiring(name, postHeadline, link):
     html = "<html><head></head><body><p>Hi " + name + ",<br><br>"
-	html += "In order to ensure fresh content on Goldee, all posts are deleted after seven days. "
-	html += "You have just two days remaining on the following post: " + postHeadline + ".<br>"
-	html += "If you'd like your post to stay active another week, simply click 'repost' within the next "
-	html += "48 hours, otherwise Goldee will take care of deleting your post for you once "
-	html += "the time is up.<br><br>"
-	html += '''<button style="width:250px; height:50px; margin: 5px 5px; border-radius: 50px; border-style: none; 
+    html += "In order to ensure fresh content on Goldee, all posts are deleted after seven days. "
+    html += "You have just two days remaining on the following post: " + postHeadline + ".<br>"
+    html += "If you'd like your post to stay active another week, simply click 'repost' within the next "
+    html += "48 hours, otherwise Goldee will take care of deleting your post for you once "
+    html += "the time is up.<br><br>"
+    html += '''<button style="width:250px; height:50px; margin: 5px 5px; border-radius: 50px; border-style: none; 
              font-size: 1em; background: #F77D6B; color: #FFFFFF;">''' + "<a href='" + link + "'>Repost</a></button><br><br><br>"
-	html += "Thanks,<br>Goldee<br>"
-	html += "P.S. As always, if you have a question, comment, or feedback, please share it by replying to this email!"
-	return html
+    html += "Thanks,<br>Goldee<br>"
+    html += "P.S. As always, if you have a question, comment, or feedback, please share it by replying to this email!"
+    return html
 
 if __name__ == "__main__":
     main()

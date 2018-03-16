@@ -34,3 +34,6 @@ class ReportedPost(db.Model):
 	PostID = db.Column(db.Integer, db.ForeignKey("Post.PostID"))
 	Reason = db.Column(db.Enum('Inappropriate', 'Spam', 'Discrimination', 'Illegal', 'Safety', 'Other'))
 	Body = db.Column(db.String(500))
+
+
+db.create_all()
