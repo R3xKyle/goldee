@@ -41,7 +41,7 @@ class CustomFlask(Flask):
 
 # Creates flask application and return
 def app_create(name):
-	application = CustomFlask(name, static_folder = 'frontEndFiles')
+	application = CustomFlask(name, static_folder = 'frontEndFiles/dist/static')
 	application.config.from_object(Config) # configures the application with the Config object
 	CORS(application) # Initializes CORS on our application to allow for communication between Flask and Vue
 	return application

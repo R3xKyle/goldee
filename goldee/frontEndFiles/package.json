@@ -27,6 +27,7 @@
     "vue-resource": "^1.4.0",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.4.7",
+    "vuedialog": "^1.0.0",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {

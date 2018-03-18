@@ -1,17 +1,42 @@
 <html>
   <body>
     [[ from "/static/_formhelpers.html" import render_field ]]
-    <form action="/post/new" method=post>
+    <form id="newpost_form" action="/post/new" method=post>
       <input type="hidden" name="csrf_token" value="(( csrf_token() ))" />
       <dl>
-        (( render_field(form.title) ))
-        (( render_field(form.description) ))
-        (( render_field(form.email) ))
-        (( render_field(form.authorName) ))
-        (( render_field(form.category) ))
-        (( render_field(form.postType) ))
+        <div class="postInfo" style="display:none;">(( render_field(form.title) ))</div>
+        <div class="postInfo" style="display:none;">(( render_field(form.description) ))</div>
+        <div class="contactInfo" style="display:none;">(( render_field(form.email) ))</div>
+        <div class="contactInfo" style="display:none;">(( render_field(form.authorName) ))</div>
+
+        <div class="postInfo" style="display:none;">(( render_field(form.address1) ))</div>
+        <div class="postInfo" style="display:none;">(( render_field(form.address2) ))</div>
+        <div class="postInfo" style="display:none;">(( render_field(form.city) ))</div>
+        <div class="postInfo" style="display:none;">(( render_field(form.state) ))</div>
+        <div class="postInfo" style="display:none;">(( render_field(form.zipCode) ))</div>
+
+        <div class="category" style="">(( render_field(form.category) ))</div>
+        <div class="postInfo" style="display:none;">(( render_field(form.postType) ))</div>
       </dl>
-      <p><input type=submit value=Post></p>
+      <div><input id="submit" class="postCss" style="display:none;" input type=submit value=Post></input></div>
     </form>
   </body>
 </html>
+
+
+
+<style>
+
+.postCss{
+  background: none;
+  border-style: solid;
+  border-color: #1E3C46;
+  color: #1E3C46;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+
+</style>

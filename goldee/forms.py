@@ -6,10 +6,10 @@ from goldee.database import getCategories
 class PostForm(FlaskForm):
 	title = StringField('Title', [validators.DataRequired(), validators.Length(max = 100)])
 	description = StringField('Description', [validators.Optional(), validators.Length(max = 500)])
-	category = SelectField('Category', choices = getCategories())
+	category = RadioField('Category', choices = getCategories())
 	authorName = StringField('Name', [validators.DataRequired(), validators.Length(max = 50)])
 	email = StringField('Email', [validators.DataRequired(), validators.Email(), validators.Length(max = 100)])
-	postType = SelectField('Post Type', choices = [('Request', 'Request'), ('Offer', 'Offer')])
+	postType = RadioField('Post Type', choices = [('Request', 'Request'), ('Offer', 'Offer')])
 	address1 = StringField('Address Line 1', [validators.Optional(), validators.Length(max = 100)])
 	address2 = StringField('Address Line 2', [validators.Optional(), validators.Length(max = 100)])
 	city = StringField('City', [validators.Optional(), validators.Length(max = 100)])

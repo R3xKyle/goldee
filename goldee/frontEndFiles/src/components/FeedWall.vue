@@ -4,23 +4,15 @@
     <br>
     <br>
     <center>
-      <p style="text-align:center; font-size:40px;">Welcome Guest!</p>
+      <p style="text-align:center; font-size:40px;">Welcome Guest!           <router-link to="/newpost" ><img class="postImg" src="../assets/post.png"></router-link></p>
       <p style="text-align:center; font-size:20px;">Want to find people near you? Sign up for Goldee. It's free!</p>
-      <router-link to="/register" class="signUp-button">SIGN UP</router-link>
-      <br></br>
-      
       <div style="height:80%;width:60%; overflow:auto; background-color:#F0EBE7; color:#1E3C46;
                 scrollbar-base-color:gold; font-family:sans-serif; padding:10px;">
-
+      <p><input type="text" v-model="searchBox" id="search" placeholder="Search..."> <button v-on:click="handleSearch()">Search</button></p>
       <div id="load-box">
-      <div>
-        <p v-for="item in list" style="background-color: white; height:100px;">
-            hahaha
-            <div v-html="getpostHTML"></div>
-        </p>
+          <div v-html="getpostHTML"></div>
       </div>
 
-      </div>
     </div>
     </center>
   </div>
@@ -39,10 +31,14 @@ export default {
   data() {
     return {
       list: [],
-      getpostHTML: ''
-    };
+      getpostHTML: '',
+      searchBox: ''
+    }
   },
   methods: {
+    say: function (message) {
+      alert(message)
+    },
     infiniteHandler($state) {
       setTimeout(() => {
         const temp = [];
@@ -54,7 +50,15 @@ export default {
       }, 5);
     },
     loadData: function(event) {
-      this.$http.get('/post/19').then((response) => {
+      this.$http.get('/feed').then((response) => {
+        var jsondata = response.body;
+        this.getpostHTML = jsondata;
+      });
+    },
+    handleSearch: function(event) {
+      this.getpostHTML = '';
+      var url = '/feed?query=' + this.searchBox;
+      this.$http.get(url).then((response) => {
         var jsondata = response.body;
         this.getpostHTML = jsondata;
       });
@@ -64,15 +68,20 @@ export default {
     this.loadData()
   }
 }
-
+window.onload = function() {
+  var app = new Vue({
+    el: "#login-div",
+    delimiters: ['[[',']]']
+  })
+}
 </script>
 
 <style>
 
 
-
 #load-box {
-      margin-top: 10%;
+      margin-top: 1%;
+      margin-left: 0px;
 }
 
 .signUp-button {
@@ -86,6 +95,11 @@ export default {
   display: inline-block;
   font-size: 20px;
   border-radius: 30px;
+}
+
+.postImg {
+    width: 30px;
+    height: 30px;
 }
 
 </style>
