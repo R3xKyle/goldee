@@ -1,0 +1,13 @@
+<html>
+  <body>
+    [[ from "/static/_formhelpers.html" import render_field ]]
+    <form id="replypost_form" action="" method=post>
+      <input type="hidden" name="csrf_token" value="(( csrf_token() ))" />
+      <dl>
+        <div>(( render_field(form.authorName) ))</div>
+        <div>(( render_field(form.message) ))</div>
+        <div>(( render_field(form.email) ))</div>
+      </dl>
+    </form>
+  </body>
+</html>

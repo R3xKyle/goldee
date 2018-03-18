@@ -1,17 +1,16 @@
 <template>
   <div id="toolbar">
     <div id="top-bar-logo">
-      <router-link to="/" style="float: left;"><img src="../assets/GoldeeLgo.png" height="100" width="160"></router-link>
+      <router-link to="/currentlocation" style="float: left;"><img src="../assets/GoldeeLgo.png" height="100" width="160"></router-link>
     </div>
 
     <div id="top-bar-link">
-       <router-link to="/about" class="no-border-button" >Share</router-link>
        <router-link to="/about" class="no-border-button" >About</router-link>
+       <router-link to="/goldeeterm" class="no-border-button" >Goldee Terms</router-link>
     </div>
 
     <div id="login-join">
        <router-link to="/newpost" class="no-border-button">New Post</router-link>
-      <router-link to="/feedwall" class="no-border-button">Feed Wall</router-link>
        <router-link to="/login" class="rounded-cornor-button">LOGIN</router-link>
     </div>
   </div>

@@ -14,36 +14,37 @@ def insertSimple(insertModel):
 
 # Returns the paginated feed containing posts within the FEED_ZIP_TOLERANCE of zipCode
 def getFeed(currentPage, zipCode):
-	try:
-		if zipCode == None:
-			zipCode = application.config['DEFAULT_ZIP_CODE']
-		tolerance = application.config['FEED_ZIP_TOLERANCE']
-		posts_per_page = application.config['POSTS_PER_PAGE']
-		posts = db.session.query(Post.PostID, Post.PostType, post.AuthorName, post.Title, post.Description, post.PostDate).\
-		 filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
-		 filter(Post.Status == "Active").\
-		 order_by(Post.PostDate.desc()).\
-		 paginate(currentPage, posts_per_page, False)
-	except:
-		raise
-	return posts
+   try:
+       if zipCode == None:
+           zipCode = application.config['DEFAULT_ZIP_CODE']
+       tolerance = application.config['FEED_ZIP_TOLERANCE']
+       posts_per_page = application.config['POSTS_PER_PAGE']
+       posts = db.session.query(Post.PostID, Post.PostType, Post.AuthorName, Post.Title, Post.Description, Post.PostDate).\
+        filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
+        filter(Post.Status == "Active").\
+        order_by(Post.PostDate.desc()).\
+        paginate(currentPage, posts_per_page, False)
+   except:
+       raise
+   return posts
 
 # Returns the paginated feed containing posts within the FEED_ZIP_TOLERANCE of zipCode and whose Title contains query
-def getFeedWithQuery(curerntPage, zipCode, query):
-	try:
-		if zipCode == None:
-			zipCode = application.config['DEFAULT_ZIP_CODE']
-		tolerance = application.config['FEED_ZIP_TOLERANCE']
-		posts_per_page = application.config['POSTS_PER_PAGE']
-		posts = db.session.query(Post.PostID, Post.PostType, post.AuthorName, post.Title, post.Description, post.PostDate).\
-		 filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
-		 filter(Post.Status == "Active").\
-		 filter(Post.Title.like(f'%{query}%')).\
-		 order_by(Post.PostDate.desc()).\
-		 paginate(currentPage, posts_per_page, False)
-	except:
-		raise
-	return posts
+def getFeedWithQuery(currentPage, zipCode, query):
+   try:
+       filterQuery = '%' + query + '%'
+       if zipCode == None:
+           zipCode = application.config['DEFAULT_ZIP_CODE']
+       tolerance = application.config['FEED_ZIP_TOLERANCE']
+       posts_per_page = application.config['POSTS_PER_PAGE']
+       posts = db.session.query(Post.PostID, Post.PostType, Post.AuthorName, Post.Title, Post.Description, Post.PostDate).\
+        filter(Post.Zip > zipCode - tolerance, Post.Zip < zipCode + tolerance).\
+        filter(Post.Status == "Active").\
+        filter(Post.Title.like(filterQuery)).\
+        order_by(Post.PostDate.desc()).\
+        paginate(currentPage, posts_per_page, False)
+   except:
+       raise
+   return posts
 
 # This inserts a pending post into the database
 # This is called on new post creation, needs to be activated with email link

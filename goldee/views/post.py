@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, flash
 
 from goldee.models import Post, PendingPost, ReportedPost
 from goldee.forms import PostForm, ReportForm, PostReplyForm
-from goldee.database import insertSimple, activatePendingPost, getUserPost, reactivatePost, getPostDetails
+from goldee.database import insertSimple, activatePendingPost, getUserPost, reactivatePost, getPostDetails, insertNewPostAsPending
 from goldee.goldeeEmail import sendEmailNewPost, sendEmailNewPostReply
 
 # Creates blueprints for all routes with prefix /post
@@ -40,7 +40,7 @@ def newPost():
 
 		sendEmailNewPost(post.Email, post.AuthorName, post.Title, post.Description, postLink)
 		flash("Your post has been saved. Please check your email to confirm posting!")
-		return redirect('/newpost/contact')
+		return redirect('/feedwall')
 	return render_template('static/newpost_form.html', form = form)
 
 # Activates a pending post. Only way to get to this link is through email
@@ -92,15 +92,15 @@ def replyPost(postID):
 		toName = post.AuthorName
 		postHeadline = post.Title
 		contactEmail = form.email.data
-		contactName = form.name.data
-		contactMessage = form.messsage.data
+		contactName = form.authorName.data
+		contactMessage = form.message.data
 
 		sendEmailNewPostReply(toAddress, toName, postHeadline, contactEmail, contactName, contactMessage)
 
 		flash("Your reply has been sent!")
 		return redirect('/')
 	
-	return render_template('static/replypost_form.html')
+	return render_template('static/replypost_form.html', form = form)
 
 
 

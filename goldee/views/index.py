@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect
 
-from goldee.database import insertSimple, getFeed
+from goldee.database import insertSimple, getFeed, getFeedWithQuery
 
 # Creates the blueprint for any / routes
 IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles/dist")
