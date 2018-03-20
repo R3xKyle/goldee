@@ -11,7 +11,6 @@ application = app_create(__name__)
 db = SQLAlchemy(application)
 # Bind Mail instance to flask application
 mail = Mail(application)
-mail.init_app(application)
 
 # Starts the database sweep that runs every day
 from goldee.sweep import DatabaseSweep
