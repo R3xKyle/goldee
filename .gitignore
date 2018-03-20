@@ -1,3 +1,6 @@
 goldee/credentials.*
 *.pyc
 *__pycache__
+
+# Mac
+*.DS_Store

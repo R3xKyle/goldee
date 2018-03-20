@@ -30,7 +30,14 @@ def newPost():
 		post.State = form.state.data
 		post.Zip = form.zipCode.data
 
-		# create posthash for pending post
+		'''
+		create posthash for pending post
+		Pending post entry only lives until the post is activated.
+		Since we did not have user persistence, we needed a way to uniquely identify posts and keep access to them
+		somewhat secure
+		'''
+		# Once application has user persistence, can remove PendingPost and keep activation behind @login_required so only
+		# the user can change the post's properties (i.e. activate/reactivate/edit).
 		try:
 			postHash = insertNewPostAsPending(post)
 			postLink = "www.gogoldee.com/post/new/" + postHash
@@ -53,7 +60,7 @@ def newPendingPost(postHash):
 # Returns the post with the provided postID
 @PostBP.route('/<postID>', methods = ['GET'])
 def getPost(postID):
-	post = getUserPost(postID) # may need to change how getPost is implemented b/c we might need to return model object instead of query object.
+	post = getUserPost(postID)
 	return render_template('static/getpost_form.html', post = post)
 
 # Renews the post with the provided postID

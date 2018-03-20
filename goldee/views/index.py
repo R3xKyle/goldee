@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect
 
-from goldee.database import insertSimple, getFeed, getFeedWithQuery
+from goldee import application
+from goldee.database import insertSimple, getFeed
 
 # Creates the blueprint for any / routes
 IndexBP = Blueprint('index', __name__, template_folder = "../frontEndFiles/dist")
@@ -14,14 +15,13 @@ def index():
 # Feed is paginated
 @IndexBP.route('/feed',  methods = ['GET'])
 def feed():
-	page = request.args.get('page', 1, type=int) # Gets the current page of the feed, defaults to 1
-	query = request.args.get('query') # Gets the search query for the feed
-	zipCode = request.args.get('zip') # Gets the zip for the feed
+	page = request.args.get('page', default=1, type=int) # Gets the current page of the feed, defaults to 1
+	query = request.args.get('query', default='', type=str) # Gets the search query for the feed
+	zipCode = request.args.get('zip', 
+		default=application.config['DEFAULT_ZIP_CODE'], 
+		type=int) # Gets the zip for the feed
 	try:
-		if query != None:
-			posts = getFeedWithQuery(page, zipCode, query)
-		else:
-			posts = getFeed(page, zipCode)
+		posts = getFeed(page, zipCode, query)
 		next_url = url_for('feed', page = posts.next_num) if posts.has_next else None
 		prev_url = url_for('feed', page = posts.prev_num) if posts.has_prev else None
 	except:
