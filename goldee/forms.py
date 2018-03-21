@@ -2,11 +2,13 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, IntegerField, PasswordField, RadioField, SelectField, StringField, validators
 from goldee.database import getCategories
 
+# Login page form
 class LoginForm(FlaskForm):
     email = StringField('Email', [validators.DataRequired()])
     password = PasswordField('Password', [validators.DataRequired()])
     stayLoggedIn = BooleanField('Stay Logged In') 
 
+# All sign up details
 class SignUpForm(FlaskForm):
     picture = FileField('Profile Picture', [FileRequired(), FileAllowed(['jpg', 'png'], 'Images only')])
     email = StringField('Email', [validators.DataRequired(), validators.Email(), validators.Length(max = 50)])
@@ -21,6 +23,7 @@ class SignUpForm(FlaskForm):
     zipCode = IntegerField('Zip', [validators.DataRequired(), validators.NumberRange(min = 10000, max = 99999)])
     acceptTOS = BooleanField('I accept the Terms of Service', [validators.DataRequired()])
 
+	# Confirm that the email is original
 	def validate_email(self, email):
 		user = User.query.filter_by(Email=email.data).first()
         if user is not None:

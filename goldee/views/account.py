@@ -7,9 +7,9 @@ from goldee.forms import LoginForm, SignUpForm
 
 # where we put the signin view make sure to add werkzeug.secure_filename() -- see here http://werkzeug.pocoo.org/docs/0.12/utils/
 
-AccountBP = Blueprint('account', __name__)
+AccountBP = Blueprint('account', __name__, template_folder = "../frontEndFiles/dist")
 
-
+# Login user if not logged in. If login is successful, direct to next page. Otherwise, return to login screen.
 @AccountBP.route('/login', methods = ['GET', 'POST'])
 def login():
 	if current_user.is_authenticated:
@@ -29,6 +29,7 @@ def login():
         return redirect(next_page)
     return render_template('login.html', form = form)
 
+# Create new account for user if not signed in
 @AccountBP.route('/signup', methods = ['GET', 'POST'])
 def signup():
 	if current_user.is_authenticated:
@@ -43,6 +44,7 @@ def signup():
         return redirect(url_for('index'))
     return render_template('signup.html', form = form)
 
+# Logout user and return them to the homepage
 @AccountBP.route('/logout')
 def logout():
     logout_user()

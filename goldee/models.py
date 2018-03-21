@@ -1,14 +1,14 @@
 # This file contains all the models for SQLAlchemy
 
-from goldee import db
+from goldee import db, login
 from flask_login import UserMixin
-from app import login
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
 
+# User Table Model
 class User(UserMixin, db.Model):
 	__tablename__ = "User"
 	UserID = db.Column(db.Integer, primary_key = True)
@@ -30,9 +30,11 @@ class User(UserMixin, db.Model):
 	DisabilityInfo = db.Column(db.String(500))
 	Posts = db.relationship('Post', backref='author', lazy='dynamic')
 
+	# Converts the cleartext password into User's HashValue
 	def set_password(self, password):
         self.HashValue = generate_password_hash(password)
 
+	#Confirms that the password matches the stored HashValue
     def check_password(self, password):
         return check_password_hash(self.HashValue, password)
 
