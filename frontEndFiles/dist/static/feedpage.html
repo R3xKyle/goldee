@@ -1,0 +1,65 @@
+<html>
+<div class=post-table>
+  <table>
+    <body>
+      <ul id='posts'>
+         [[ for item in posts ]]
+         <a href="postdetail/(( item.PostID ))">
+           <div class="post-list">
+             <p class="top-line">(( item.AuthorName )), ((item.City))
+             </p>
+             <p><b>(( item.Title ))</b></p>
+             <p>(( item.Description ))</p>
+             <p>(( item.Zip ))</p>
+             <p style="color:#F77D6B">  Posted: (( item.PostDate )) hour ago to Local!</p>
+           </div>
+         </a>
+         [[ endfor ]]
+      </ul>
+    </body>
+  </table>
+</div>
+
+</html>
+
+<style>
+
+p {
+  margin: 2px;
+  text-align: left;
+  margin-left: 8px;
+}
+
+.top-line {
+  margin-top: 5px;
+}
+
+.post-list {
+  background-color: white;
+  height: 120px;
+
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+  padding: 20px;
+}
+
+input {
+  margin-bottom: 5px;
+  padding: 2px 3px;
+  width: 390px;
+}
+
+a {
+   text-decoration: none;
+}
+
+</style>

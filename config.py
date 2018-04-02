@@ -2,9 +2,9 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
-from goldee.credentials import db_url, secretKey, email, emailPassword
+from credentials import db_url, secretKey, email, emailPassword
 
-# Class to configure Flask application
+# Class to configure Flask app
 class Config(object):
 	#sqlalchemy
 	SQLALCHEMY_DATABASE_URI = db_url
@@ -39,9 +39,9 @@ class CustomFlask(Flask):
 	 comment_end_string="\#}",
 	))
 
-# Creates flask application and return
+# Creates flask app and return
 def app_create(name):
-	application = CustomFlask(name, static_folder = 'frontEndFiles/dist/static')
-	application.config.from_object(Config) # configures the application with the Config object
-	CORS(application) # Initializes CORS on our application to allow for communication between Flask and Vue
-	return application
+	app = CustomFlask(name)
+	app.config.from_object(Config) # configures the app with the Config object
+	CORS(app) # Initializes CORS on our app to allow for communication between Flask and Vue
+	return app
