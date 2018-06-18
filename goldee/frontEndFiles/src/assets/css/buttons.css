@@ -1,0 +1,88 @@
+/* Goldee CSS styles */
+/* @author Tina Rickard */
+
+@import url('https://fonts.googleapis.com/css?family=Muli:600,700,900');
+
+html {
+  font-family: 'Muli', sans-serif; !important;
+}
+
+/* -- things from styles.css for testing purposes -- */
+/*
+div {
+  margin: 10px 10px;
+  padding: 1px 1px;
+}
+
+.navbar {
+  background-color: #B0E7EA;
+  height: 60px;
+}
+
+.navbar img {
+  width: 100px;
+  height: auto;
+}
+*/
+/* -- containers -- */
+
+.categories {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.categories h1 {
+  color: #1E3C46;
+  font-size: 2em;
+}
+
+.categories a {
+  color: #F7AEA3;
+}
+
+/* -- buttons galore -- */
+
+button {
+  margin: 5px 5px;
+  border-radius: 50px;
+  border-style: none;
+  font-size: 1.1em;
+}
+
+.button-blue {
+  background: #B0E7EA;
+}
+
+.button-blue_large {
+  background: #B0E7EA;
+  font-size: 1.5em;
+  font-weight: 700;
+  /* position: absolute; */
+  top: 325px;
+  left: 150px;
+}
+
+.button-pink {
+  background: #F77D6B;
+  color: #FFFFFF;
+}
+
+.button-gray {
+  background: #F0EBE7;
+  color: #1E3C46;
+  font-weight: 700;
+}
+
+.button-gray:active,
+.button-gray:focus {
+  background: #F7AEA3;
+  color: #1E3C46;
+  font-weight: 700;
+}
+
+.button-white {
+  background: #FFFFFF;
+  color: #1E3C46;
+  text-align: left;
+}

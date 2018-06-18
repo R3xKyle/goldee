@@ -1,0 +1,9 @@
+/* Goldee CSS styles */
+/* @author Tina Rickard */
+
+@import url('https://fonts.googleapis.com/css?family=Muli:600,700,900');
+
+html * {
+  font-family: 'Muli', sans-serif; !important;
+}
+
