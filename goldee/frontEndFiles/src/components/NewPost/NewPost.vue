@@ -1,18 +1,34 @@
 <template>
   <div id="app">
     <toolbar></toolbar>
-    <div class="page">
-      <router-link to="/feedwall" ><img class="cancelPostImg" src="../../assets/cancelPost.png"></router-link>
-      <div class="newpost-page">
-        <div class="category">
-          <p>Select a Category for your Post</p>
-          <p>All posts stay active for 30 days and must adhere to Goldee's guidelines.</p>
+      <div class="body">
+        <router-link to="/feedwall" ><img class="cancelPostImg" src="../../assets/cancelPost.png" style="width:auto; height:50px"></router-link>
+        <h1>Select a category for your post</h1>
+        <!-- <div v-html="postHTML"></div> -->
+        <div class="categories">
+          <button class="button-gray" style="width:250px; height:50px">Food/Drink</button>
+          <button class="button-gray" style="width:250px; height:50px">Hangouts</button>
+          <br />
+          <button class="button-gray" style="width:250px; height:50px">Volunteer</button>
+          <button class="button-gray" style="width:250px; height:50px">Sports/Fitness</button>
+          <br />
+          <button class="button-gray" style="width:250px; height:50px">Learn/Teach</button>
+          <button class="button-gray" style="width:250px; height:50px">Lend/Borrow</button>
+          <br />
+          <button class="button-gray" style="width:250px; height:50px">Rideshare</button>
+          <button class="button-gray" style="width:250px; height:50px">Something else</button>
         </div>
-        <div v-html="postHTML"></div>
-        <div><button id="nextToPost" v-on:click="showPost($event)">Next</button></div>
-        <div><button id="postToContact" style="display:none" v-on:click="showContact($event)">Next</button></div>
+        <h3>Posts stay active for 7 days<br/>and must adhere to <a href="../GoldeeTerm.vue">Goldee's guidelines</a>.</h3>
+        <button class="button-pink" style="margin-top: 20px; width:100px; height:40px" id="nextToPost" v-on:click="showPost($event)">Next</button>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       </div>
-    </div>
+      <div id="footer" class="footer">
+        <img src="../../assets/logo_icon_white.png">
+        <p class="footer-text" style="margin-top: 25px">Goldee connects communities of people of care.</p>
+        <p class="footer-text" style="text-align: right; margin-right: 20px"><a href="mailto: support@gogoldee.com">Help!</a></p>
+        <p class="small-text">Copyright &copy; 2018 All rights reserved.</p>
+        <p class="small-text">Terms of Use | Privacy Policy | Safety</p>
+      </div>
   </div>
 </template>
 
@@ -74,138 +90,6 @@ window.onload = function() {
 </script>
 
 <style>
-.clickable-button {
-  background: Bisque;
-  border-style: solid;
-  border-color: white;
-  color: black;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-.blue-button {
-  background: SkyBlue;
-  border-style: solid;
-  border-color: white;
-  color: white;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-.text-input {
-  width: 100%;
-  height: 35px;
-  font-size: 20px;
-}
-.block-input {
-  width: 100%;
-  height: 350px;
-  font-size: 20px;
-}
-.page {
-  width: 100%;
-  text-align: center;
-}
-.newpost-page {
-  width: 60%;
-  text-align: center;
-}
-
-#postType input {
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    border: 0;
-    overflow: hidden;
-}
-
-#postType label {
-  display: inline-block;
-  width: 60px;
-  background-color: Bisque;
-  color: black;
-  font-size: 16px;
-  font-weight: normal;
-  text-align: center;
-  text-shadow: none;
-  padding: 10px 25px;
-  border-radius: 20px;
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition:    all 0.1s ease-in-out;
-  -ms-transition:     all 0.1s ease-in-out;
-  -o-transition:      all 0.1s ease-in-out;
-  transition:         all 0.1s ease-in-out;
-}
-
-#postType input:checked + label {
-  background-color: IndianRed;
-  color: white;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-#postType li {
-  display: inline;
-}
-
-#postType {
-  list-style-type: none;
-}
-
-
-#category input {
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    border: 0;
-    overflow: hidden;
-}
-
-#category label {
-  display: inline-block;
-  width: 120px;
-  background-color: Bisque;
-  color: black;
-  font-size: 16px;
-  font-weight: normal;
-  text-align: center;
-  text-shadow: none;
-  padding: 10px 25px;
-  border-radius: 20px;
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition:    all 0.1s ease-in-out;
-  -ms-transition:     all 0.1s ease-in-out;
-  -o-transition:      all 0.1s ease-in-out;
-  transition:         all 0.1s ease-in-out;
-}
-
-#category input:checked + label {
-  background-color: IndianRed;
-  color: white;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-#category li {
-  display: inline;
-  margin: 10px 0;
-}
-
-#category {
-  list-style-type: none;
-}
-
-.cancelPostImg {
-  width: 30px;
-  height: 30px;
-}
-
+  @import '../../assets/css/styles.css'
+  @import '../../assets/css/buttons.css'
 </style>

@@ -32,6 +32,16 @@
 
 <style>
 
+.footer {
+  background-color: #F7AEA3;
+  color: #1E3C46;
+  height: 60px;
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 #footbar {
   position: absolute;
   bottom: -450%;

@@ -1,21 +1,26 @@
+<style>
+  @import '../assets/css/styles.css'
+</style>
+
 <template>
   <div id="app">
-    <toolbar></toolbar>
-    <div class="page">
-        <div class="page-title">
-            Connect with People Near by
-        </div>
-        <div class="page-sub-title">
-            Make a Positive Difference in your Community
-        </div>
-
-        <i  v-show="loading" class="fa fa-spinner fa-spin"></i>
-
-        <p>See What's Near You</p>
-        <button v-on:click="getLocation" class="location-button">Use My Location</button>
-        <div class="next">
-        <router-link to="/feedwall" class="next-button">Next</router-link>
-        </div>
+    <toolbar style="margin-bottom: 0px;"></toolbar>
+    <div class="page" style="margin: 0px;">
+      <div class="body" style="margin-top: 0px;">
+        <h1>Connect with<br/>Good People</h1>
+          <h2 style="font-size: 1em;">Make a Positive Difference<br/>in your Community</h2>
+      
+        <br/>
+        <a class="typeform-share button" href="https://erin171.typeform.com/to/omMu5N" data-mode="popup" style="-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;" data-hide-headers=true target="_blank">See Who's Near You </a> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm_share", b="https://embed.typeform.com/"; if(!gi.call(d,id)){ js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script>
+      </div>
+      </div>
+      <div class="footer" style="text-align:left; background-color:#F77D6B; margin: 0;">
+        <img src="../assets/logo_icon_white.png">
+        <p class="footer-text" style="margin-top: 25px">Goldee connects communities of people of care.</p>
+        <p class="footer-text" style="text-align: right; margin-right: 20px"><a href="mailto: support@gogoldee.com">Help!</a></p>
+        <p class="small-text">Copyright &copy; 2018 All rights reserved.</p>
+        <p class="small-text">Terms of Use | Privacy Policy | Safety</p>
+      </div>
     </div>
   </div>
 </template>
@@ -67,61 +72,3 @@ window.onload = function() {
 }
 
 </script>
-
-<style>
-.page {
-  width: 100%;
-  text-align: center;
-}
-
-.page-title {
-  text-align: left;
-  margin-left: 25%;
-  margin-right:20%;
-  margin-bottom: 10px;
-  font-size: 56px;
-}
-
-.page-sub-title {
-  text-align: left;
-  margin-left: 25%;
-  margin-right:20%;
-  margin-bottom: 110px;
-  font-size: 36px;
-  color: #F77D6B;
-}
-
-.location-button {
-  background: #8EDBDF;
-  border-style: solid;
-  border-color: white;
-  color: #1E3C46;
-  padding: 16px 40px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  border-radius: 30px;
-}
-
-.next-button {
-  background: #F77D6B;
-  border-style: solid;
-  border-color: white;
-  color: white;
-  padding: 16px 40px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  border-radius: 30px;
-}
-
-.next {
-  margin-top: 80px;
-  margin-left: 25%;
-  margin-right:20%;
-  text-align: right;
-}
-
-</style>
